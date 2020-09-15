@@ -34,6 +34,7 @@ binaries += [b for b in collect_dynamic_libs('PyQt5') if 'qwindowsvista' in b[0]
 
 binaries += [('C:/tmp/libsecp256k1-0.dll', '.')]
 binaries += [('C:/tmp/libusb-1.0.dll', '.')]
+binaries += [('C:/tmp/libzbar-0.dll', '.')]
 
 datas = [
     (home+'electrum_redd/*.json', 'electrum_redd'),
@@ -41,7 +42,6 @@ datas = [
     (home+'electrum_redd/wordlist/english.txt', 'electrum_redd/wordlist'),
     (home+'electrum_redd/locale', 'electrum_redd/locale'),
     (home+'electrum_redd/plugins', 'electrum_redd/plugins'),
-    ('C:\\Program Files (x86)\\ZBar\\bin\\', '.'),
     (home+'electrum_redd/gui/icons', 'electrum_redd/gui/icons'),
 ]
 datas += collect_data_files('trezorlib')
