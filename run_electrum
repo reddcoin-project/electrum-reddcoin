@@ -42,7 +42,7 @@ from typing import TYPE_CHECKING
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 is_bundle = getattr(sys, 'frozen', False)
-is_local = not is_bundle and os.path.exists(os.path.join(script_dir, "electrum.desktop"))
+is_local = not is_bundle and os.path.exists(os.path.join(script_dir, "electrum-rdd.desktop"))
 is_android = 'ANDROID_DATA' in os.environ
 
 if is_local:  # running from source
@@ -50,7 +50,7 @@ if is_local:  # running from source
     warnings.simplefilter('default', DeprecationWarning)
 
 # move this back to gui/kivy/__init.py once plugins are moved
-os.environ['KIVY_DATA_DIR'] = os.path.abspath(os.path.dirname(__file__)) + '/electrum/gui/kivy/data/'
+os.environ['KIVY_DATA_DIR'] = os.path.abspath(os.path.dirname(__file__)) + '/electrum_redd/gui/kivy/data/'
 
 if is_local or is_android:
     sys.path.insert(0, os.path.join(script_dir, 'packages'))
@@ -80,22 +80,22 @@ if not is_android:
     check_imports()
 
 
-from electrum.logging import get_logger, configure_logging
-from electrum import util
-from electrum import constants
-from electrum import SimpleConfig
-from electrum.wallet_db import WalletDB
-from electrum.wallet import Wallet
-from electrum.storage import WalletStorage
-from electrum.util import print_msg, print_stderr, json_encode, json_decode, UserCancelled
-from electrum.util import InvalidPassword
-from electrum.commands import get_parser, known_commands, Commands, config_variables
-from electrum import daemon
-from electrum import keystore
-from electrum.util import create_and_start_event_loop
+from electrum_redd.logging import get_logger, configure_logging
+from electrum_redd import util
+from electrum_redd import constants
+from electrum_redd import SimpleConfig
+from electrum_redd.wallet_db import WalletDB
+from electrum_redd.wallet import Wallet
+from electrum_redd.storage import WalletStorage
+from electrum_redd.util import print_msg, print_stderr, json_encode, json_decode, UserCancelled
+from electrum_redd.util import InvalidPassword
+from electrum_redd.commands import get_parser, known_commands, Commands, config_variables
+from electrum_redd import daemon
+from electrum_redd import keystore
+from electrum_redd.util import create_and_start_event_loop
 
 if TYPE_CHECKING:
-    from electrum.plugin import Plugins
+    from electrum_redd.plugin import Plugins
 
 _logger = get_logger(__name__)
 
@@ -132,7 +132,7 @@ def init_cmdline(config_options, wallet_path, server):
 
     if cmd.requires_wallet and not storage.file_exists():
         print_msg("Error: Wallet file not found.")
-        print_msg("Type 'electrum create' to create a new wallet, or provide a path to a wallet with the -w option")
+        print_msg("Type 'electrum-rdd create' to create a new wallet, or provide a path to a wallet with the -w option")
         sys_exit(1)
 
     # important warning
@@ -256,7 +256,7 @@ async def run_offline_command(config, config_options, plugins: 'Plugins'):
 
 
 def init_plugins(config, gui_name):
-    from electrum.plugin import Plugins
+    from electrum_redd.plugin import Plugins
     return Plugins(config, gui_name)
 
 def sys_exit(i):
@@ -307,7 +307,7 @@ if __name__ == '__main__':
     # config is an object passed to the various constructors (wallet, interface, gui)
     if is_android:
         from jnius import autoclass
-        build_config = autoclass("org.electrum.electrum.BuildConfig")
+        build_config = autoclass("org.electrum_redd.electrum_redd.BuildConfig")
         config_options = {
             'verbosity': '*' if build_config.DEBUG else '',
             'cmd': 'gui',
@@ -327,7 +327,7 @@ if __name__ == '__main__':
         config_options['portable'] = True
 
     if config_options.get('portable'):
-        config_options['electrum_path'] = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'electrum_data')
+        config_options['electrum_path'] = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'electrum-rdd_data')
 
     if not config_options.get('verbosity'):
         warnings.simplefilter('ignore', DeprecationWarning)
@@ -335,7 +335,7 @@ if __name__ == '__main__':
     # check uri
     uri = config_options.get('url')
     if uri:
-        if not uri.startswith('bitcoin:'):
+        if not uri.startswith('reddcoin:'):
             print_stderr('unknown command:', uri)
             sys.exit(1)
 
@@ -410,7 +410,7 @@ if __name__ == '__main__':
             try:
                 result = daemon.request(config, 'run_cmdline', (config_options,), timeout)
             except daemon.DaemonNotRunning:
-                print_msg("Daemon not running; try 'electrum daemon -d'")
+                print_msg("Daemon not running; try 'electrum-rdd daemon -d'")
                 if not cmd.requires_network:
                     print_msg("To run this command without a daemon, use --offline")
                 sys_exit(1)

@@ -26,7 +26,7 @@ with open('contrib/requirements/requirements-hw.txt') as f:
     requirements_hw = f.read().splitlines()
 
 # load version.py; needlessly complicated alternative to "imp.load_source":
-version_spec = importlib.util.spec_from_file_location('version', 'electrum/version.py')
+version_spec = importlib.util.spec_from_file_location('version', 'electrum_redd/version.py')
 version_module = version = importlib.util.module_from_spec(version_spec)
 version_spec.loader.exec_module(version_module)
 
@@ -46,8 +46,8 @@ if platform.system() in ['Linux', 'FreeBSD', 'DragonFly']:
         else:
             usr_share = os.path.expanduser('~/.local/share')
     data_files += [
-        (os.path.join(usr_share, 'applications/'), ['electrum.desktop']),
-        (os.path.join(usr_share, icons_dirname), ['electrum/gui/icons/electrum.png']),
+        (os.path.join(usr_share, 'applications/'), ['electrum-rdd.desktop']),
+        (os.path.join(usr_share, icons_dirname), ['electrum_rdd/gui/icons/electrum-rdd.png']),
     ]
 
 extras_require = {
@@ -65,37 +65,37 @@ extras_require['fast'] = extras_require['crypto']
 
 
 setup(
-    name="Electrum",
+    name="Electrum-RDD",
     version=version.ELECTRUM_VERSION,
     python_requires='>={}'.format(MIN_PYTHON_VERSION),
     install_requires=requirements,
     extras_require=extras_require,
     packages=[
-        'electrum',
-        'electrum.gui',
-        'electrum.gui.qt',
-        'electrum.plugins',
-    ] + [('electrum.plugins.'+pkg) for pkg in find_packages('electrum/plugins')],
+        'electrum_rdd',
+        'electrum_rdd.gui',
+        'electrum_rdd.gui.qt',
+        'electrum_rdd.plugins',
+    ] + [('electrum_rdd.plugins.'+pkg) for pkg in find_packages('electrum_rdd/plugins')],
     package_dir={
-        'electrum': 'electrum'
+        'electrum_rdd': 'electrum_rdd'
     },
     package_data={
         '': ['*.txt', '*.json', '*.ttf', '*.otf', '*.csv'],
-        'electrum': [
+        'electrum_rdd': [
             'wordlist/*.txt',
             'locale/*/LC_MESSAGES/electrum.mo',
             'lnwire/*.csv',
         ],
-        'electrum.gui': [
+        'electrum_rdd.gui': [
             'icons/*',
         ],
     },
-    scripts=['electrum/electrum'],
+    scripts=['electrum_rdd/electrum-rdd'],
     data_files=data_files,
-    description="Lightweight Bitcoin Wallet",
+    description="Lightweight Reddcoin Wallet",
     author="Thomas Voegtlin",
     author_email="thomasv@electrum.org",
     license="MIT Licence",
-    url="https://electrum.org",
-    long_description="""Lightweight Bitcoin Wallet""",
+    url="https://reddcoin.com",
+    long_description="""Lightweight Reddcoin Wallet""",
 )

@@ -1,12 +1,15 @@
-Electrum - Lightweight Bitcoin client
-=====================================
+Electrum-RDD - Lightweight Reddcoin client
+==========================================
+
+Electrum-RDD is a port of Electrum, the Bitcoin wallet, to Reddcoin.
 
 ::
 
   Licence: MIT Licence
-  Author: Thomas Voegtlin
+  Original Author: Thomas Voegtlin
+  Port Maintainer: John Nash (Gnasher) forked for Reddcoin
   Language: Python (>= 3.6)
-  Homepage: https://electrum.org/
+  Homepage: https://wallet.reddcoin.com/
 
 
 .. image:: https://travis-ci.org/spesmilo/electrum.svg?branch=master
@@ -30,7 +33,7 @@ Getting started
 
 .. _you may download it here: https://electrum.org/#download
 
-Electrum itself is pure Python, and so are most of the required dependencies,
+Electrum-RDD itself is pure Python, and so are most of the required dependencies,
 but not everything. The following sections describe how to run from source, but here
 is a TL;DR::
 
@@ -73,20 +76,20 @@ Running from tar.gz
 -------------------
 
 If you downloaded the official package (tar.gz), you can run
-Electrum from its root directory without installing it on your
+Electrum-RDD from its root directory without installing it on your
 system; all the pure python dependencies are included in the 'packages'
-directory. To run Electrum from its root directory, just do::
+directory. To run Electrum-RDD from its root directory, just do::
 
     ./run_electrum
 
-You can also install Electrum on your system, by running this command::
+You can also install Electrum-RDD on your system, by running this command::
 
     sudo apt-get install python3-setuptools python3-pip
     python3 -m pip install --user .
 
 This will download and install the Python dependencies used by
-Electrum instead of using the 'packages' directory.
-It will also place an executable named :code:`electrum` in :code:`~/.local/bin`,
+Electrum-RDD instead of using the 'packages' directory.
+It will also place an executable named :code:`electrum-rdd` in :code:`~/.local/bin`,
 so make sure that is on your :code:`PATH` variable.
 
 
@@ -95,8 +98,8 @@ Development version (git clone)
 
 Check out the code from GitHub::
 
-    git clone git://github.com/spesmilo/electrum.git
-    cd electrum
+    git clone git://github.com/reddcoin-project/electrum-reddcoin.git
+    cd electrum-reddcoin
     git submodule update --init
 
 Run install (this should install dependencies)::
@@ -109,7 +112,7 @@ Create translations (optional)::
     sudo apt-get install python-requests gettext
     ./contrib/pull_locale
 
-Finally, to start Electrum::
+Finally, to start Electrum-RDD::
 
     ./run_electrum
 

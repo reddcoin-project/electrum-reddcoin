@@ -1,0 +1,22 @@
+# If you want Electrum to appear in a Linux app launcher ("start menu"), install this by doing:
+# sudo desktop-file-install electrum-rdd.desktop
+
+[Desktop Entry]
+Comment=Lightweight Reddcoin Client
+Exec=sh -c "PATH=\"\\$HOME/.local/bin:\\$PATH\"; electrum-rdd %u"
+GenericName[en_US]=Reddcoin Wallet
+GenericName=Reddcoin Wallet
+Icon=electrum-rdd
+Name[en_US]=Electrum Reddcoin Wallet
+Name=Electrum Reddcoin Wallet
+Categories=Finance;Network;
+StartupNotify=true
+StartupWMClass=electrum-rdd
+Terminal=false
+Type=Application
+MimeType=x-scheme-handler/reddcoin;
+Actions=Testnet;
+
+[Desktop Action Testnet]
+Exec=sh -c "PATH=\"\\$HOME/.local/bin:\\$PATH\"; electrum-rdd --testnet %u"
+Name=Testnet mode
