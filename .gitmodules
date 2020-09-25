@@ -1,12 +1,9 @@
-[submodule "contrib/deterministic-build/electrum-rdd-locale"]
-	path = contrib/deterministic-build/electrum-rdd-locale
-	url = https://github.com/reddcoin-project/electrum-rdd-locale
+[submodule "contrib/deterministic-build/electrum-redd-locale"]
+	path = contrib/deterministic-build/electrum-redd-locale
+	url = https://github.com/reddcoin-project/electrum-redd-locale
 [submodule "contrib/CalinsQRReader"]
 	path = contrib/osx/CalinsQRReader
 	url = https://github.com/spesmilo/CalinsQRReader
-[submodule "electrum_rdd/www"]
-	path = electrum_rdd/www
-	url = https://github.com/reddcoin-project/electrum-rdd-http.git
 [submodule "electrum_redd/www"]
 	path = electrum_redd/www
-	url = ../../reddcoin-project/electrum-redd-http.git
+	url = https://github.com/reddcoin-project/electrum-redd-http.git

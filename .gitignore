@@ -4,7 +4,7 @@
 build/
 dist/
 *.egg/
-Electrum.egg-info/
+Electrum_Redd.egg-info/
 electrum_redd/locale/
 .devlocaltmp/
 *_trial_temp
@@ -16,7 +16,7 @@ bin/
 .idea
 .mypy_cache
 .vscode
-electrum-rdd_data
+electrum-redd_data
 
 # icons
 electrum_redd/gui/kivy/theming/light-0.png
@@ -37,7 +37,10 @@ contrib/build-linux/appimage/.cache/
 contrib/android_debug.keystore
 
 # shared objects
-electrum_rdd/*.so
-electrum_rdd/*.so.0
-electrum_rdd/*.dll
-electrum_rdd/*.dylib
+electrum_redd/*.so
+electrum_redd/*.so.0
+electrum_redd/*.dll
+electrum_redd/*.dylib
+
+# virtualenv
+venv

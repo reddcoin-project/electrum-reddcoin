@@ -14,7 +14,7 @@ install:
 cache:
   - pip: true
   - directories:
-    - /tmp/electrum-rdd-build
+    - /tmp/electrum-redd-build
 script:
     - tox
 after_success:
@@ -33,10 +33,10 @@ jobs:
         - pip install .[tests]
         - pip install electrumx
       before_script:
-          - electrum_rdd/tests/regtest/start_bitcoind.sh
-          - electrum_rdd/tests/regtest/start_electrumx.sh
+          - electrum_redd/tests/regtest/start_bitcoind.sh
+          - electrum_redd/tests/regtest/start_electrumx.sh
       script:
-        - python -m unittest electrum_rdd/tests/regtest.py
+        - python -m unittest electrum_redd/tests/regtest.py
       after_success: True
     - name: "Flake8 linter tests"
       language: python
@@ -52,9 +52,9 @@ jobs:
       services:
         - docker
       install:
-        - sudo docker build --no-cache -t electrum-rdd-wine-builder-img ./contrib/build-wine/
+        - sudo docker build --no-cache -t electrum-redd-wine-builder-img ./contrib/build-wine/
       script:
-        - sudo docker run --name electrum-rdd-wine-builder-cont -v $PWD:/opt/wine64/drive_c/electrum --rm --workdir /opt/wine64/drive_c/electrum/contrib/build-wine electrum-wine-builder-img ./build.sh
+        - sudo docker run --name electrum-redd-wine-builder-cont -v $PWD:/opt/wine64/drive_c/electrum --rm --workdir /opt/wine64/drive_c/electrum/contrib/build-wine electrum-wine-builder-img ./build.sh
       after_success: true
     - if: (branch = master) OR (tag IS present)
       name: "Android build"
@@ -95,9 +95,9 @@ jobs:
       services:
         - docker
       install:
-        - sudo docker build --no-cache -t electrum-rdd-appimage-builder-img ./contrib/build-linux/appimage/
+        - sudo docker build --no-cache -t electrum-redd-appimage-builder-img ./contrib/build-linux/appimage/
       script:
-        - sudo docker run --name electrum-rdd-appimage-builder-cont -v $PWD:/opt/electrum --rm --workdir /opt/electrum-rdd/contrib/build-linux/appimage electrum-appimage-builder-img ./build.sh
+        - sudo docker run --name electrum-redd-appimage-builder-cont -v $PWD:/opt/electrum --rm --workdir /opt/electrum-redd/contrib/build-linux/appimage electrum-appimage-builder-img ./build.sh
       after_success: true
     - if: (branch = master) OR (tag IS present)
       name: "tarball build"
@@ -109,7 +109,7 @@ jobs:
         # hack: travis already cloned the repo, but we re-clone now, as we need to have umask set BEFORE cloning
         - umask 0022
         - mkdir fresh_clone && cd fresh_clone
-        - git clone https://github.com/$TRAVIS_REPO_SLUG.git && cd electrum-rdd
+        - git clone https://github.com/$TRAVIS_REPO_SLUG.git && cd electrum-redd
         - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then git fetch origin pull/$TRAVIS_PULL_REQUEST/merge; fi
         - git checkout $TRAVIS_COMMIT
         - echo "Second git clone ready at $PWD"
@@ -117,7 +117,7 @@ jobs:
         - sudo docker build --no-cache -t electrum-sdist-builder-img ./contrib/build-linux/sdist/
       script:
         - echo "Building sdist at $PWD"
-        - sudo docker run --name electrum-sdist-builder-cont -v $PWD:/opt/electrum-rdd --rm --workdir /opt/electrum-rdd/contrib/build-linux/sdist electrum-sdist-builder-img ./build.sh
+        - sudo docker run --name electrum-sdist-builder-cont -v $PWD:/opt/electrum-redd --rm --workdir /opt/electrum-redd/contrib/build-linux/sdist electrum-sdist-builder-img ./build.sh
       after_success: true
     - stage: release check
       install:

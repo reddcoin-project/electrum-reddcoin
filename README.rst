@@ -1,7 +1,7 @@
-Electrum-RDD - Lightweight Reddcoin client
-==========================================
+Electrum-Redd - Lightweight Reddcoin client
+===========================================
 
-Electrum-RDD is a port of Electrum, the Bitcoin wallet, to Reddcoin.
+Electrum-Redd is a port of Electrum, the Bitcoin wallet, to Reddcoin.
 
 ::
 
@@ -33,7 +33,7 @@ Getting started
 
 .. _you may download it here: https://electrum.org/#download
 
-Electrum-RDD itself is pure Python, and so are most of the required dependencies,
+Electrum-Redd itself is pure Python, and so are most of the required dependencies,
 but not everything. The following sections describe how to run from source, but here
 is a TL;DR::
 
@@ -76,20 +76,20 @@ Running from tar.gz
 -------------------
 
 If you downloaded the official package (tar.gz), you can run
-Electrum-RDD from its root directory without installing it on your
+Electrum-Redd from its root directory without installing it on your
 system; all the pure python dependencies are included in the 'packages'
-directory. To run Electrum-RDD from its root directory, just do::
+directory. To run Electrum-Redd from its root directory, just do::
 
     ./run_electrum
 
-You can also install Electrum-RDD on your system, by running this command::
+You can also install Electrum-Redd on your system, by running this command::
 
     sudo apt-get install python3-setuptools python3-pip
     python3 -m pip install --user .
 
 This will download and install the Python dependencies used by
-Electrum-RDD instead of using the 'packages' directory.
-It will also place an executable named :code:`electrum-rdd` in :code:`~/.local/bin`,
+Electrum-Redd instead of using the 'packages' directory.
+It will also place an executable named :code:`electrum-redd` in :code:`~/.local/bin`,
 so make sure that is on your :code:`PATH` variable.
 
 
@@ -98,8 +98,8 @@ Development version (git clone)
 
 Check out the code from GitHub::
 
-    git clone git://github.com/reddcoin-project/electrum-reddcoin.git
-    cd electrum-reddcoin
+    git clone git://github.com/reddcoin-project/electrum-redd.git
+    cd electrum-redd
     git submodule update --init
 
 Run install (this should install dependencies)::
@@ -112,7 +112,7 @@ Create translations (optional)::
     sudo apt-get install python-requests gettext
     ./contrib/pull_locale
 
-Finally, to start Electrum-RDD::
+Finally, to start Electrum-Redd::
 
     ./run_electrum
 

@@ -46,8 +46,8 @@ if platform.system() in ['Linux', 'FreeBSD', 'DragonFly']:
         else:
             usr_share = os.path.expanduser('~/.local/share')
     data_files += [
-        (os.path.join(usr_share, 'applications/'), ['electrum-rdd.desktop']),
-        (os.path.join(usr_share, icons_dirname), ['electrum_rdd/gui/icons/electrum-rdd.png']),
+        (os.path.join(usr_share, 'applications/'), ['electrum-redd.desktop']),
+        (os.path.join(usr_share, icons_dirname), ['electrum_redd/gui/icons/electrum-redd.png']),
     ]
 
 extras_require = {
@@ -65,32 +65,32 @@ extras_require['fast'] = extras_require['crypto']
 
 
 setup(
-    name="Electrum-RDD",
+    name="Electrum-Redd",
     version=version.ELECTRUM_VERSION,
     python_requires='>={}'.format(MIN_PYTHON_VERSION),
     install_requires=requirements,
     extras_require=extras_require,
     packages=[
-        'electrum_rdd',
-        'electrum_rdd.gui',
-        'electrum_rdd.gui.qt',
-        'electrum_rdd.plugins',
-    ] + [('electrum_rdd.plugins.'+pkg) for pkg in find_packages('electrum_rdd/plugins')],
+        'electrum_redd',
+        'electrum_redd.gui',
+        'electrum_redd.gui.qt',
+        'electrum_redd.plugins',
+    ] + [('electrum_redd.plugins.'+pkg) for pkg in find_packages('electrum_redd/plugins')],
     package_dir={
-        'electrum_rdd': 'electrum_rdd'
+        'electrum_redd': 'electrum_redd'
     },
     package_data={
         '': ['*.txt', '*.json', '*.ttf', '*.otf', '*.csv'],
-        'electrum_rdd': [
+        'electrum_redd': [
             'wordlist/*.txt',
             'locale/*/LC_MESSAGES/electrum.mo',
             'lnwire/*.csv',
         ],
-        'electrum_rdd.gui': [
+        'electrum_redd.gui': [
             'icons/*',
         ],
     },
-    scripts=['electrum_rdd/electrum-rdd'],
+    scripts=['electrum_redd/electrum-redd'],
     data_files=data_files,
     description="Lightweight Reddcoin Wallet",
     author="Thomas Voegtlin",
