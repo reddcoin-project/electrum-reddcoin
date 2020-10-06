@@ -548,6 +548,7 @@ class Transaction:
 
     @property
     def locktime(self):
+        self.deserialize()
         return self._locktime
 
     @locktime.setter
@@ -558,6 +559,7 @@ class Transaction:
 
     @property
     def version(self):
+        self.deserialize()
         return self._version
 
     @version.setter
@@ -567,6 +569,7 @@ class Transaction:
 
     @property
     def time(self):
+        self.deserialize()
         return self._time
 
     @time.setter
