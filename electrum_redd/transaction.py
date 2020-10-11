@@ -38,6 +38,8 @@ from collections import defaultdict
 from enum import IntEnum
 import itertools
 import binascii
+import calendar
+from datetime import datetime
 
 from . import ecc, bitcoin, constants, segwit_addr, bip32
 from .bip32 import BIP32Node
@@ -538,6 +540,7 @@ class Transaction:
         self._outputs = None  # type: List[TxOutput]
         self._locktime = 0
         self._version = 2
+        self._time = calendar.timegm(datetime.utcnow().utctimetuple())
 
         self._cached_txid = None  # type: Optional[str]
 
@@ -558,6 +561,16 @@ class Transaction:
     def version(self, value):
         self._version = value
         self.invalidate_ser_cache()
+
+    @property
+    def time(self):
+        return self._time
+
+    @time.setter
+    def time(self, value):
+        self._time = value
+        self.invalidate_ser_cache()
+
 
     def to_json(self) -> dict:
         d = {
@@ -606,6 +619,10 @@ class Transaction:
             for txin in self._inputs:
                 parse_witness(vds, txin)
         self._locktime = vds.read_uint32()
+        if self._version >= 2:
+            self._time = vds.read_uint32()
+        else:
+            self._time = 0
         if vds.can_read_more():
             raise SerializationError('extra junk at the end')
 
@@ -809,6 +826,7 @@ class Transaction:
         self.deserialize()
         nVersion = int_to_hex(self.version, 4)
         nLocktime = int_to_hex(self.locktime, 4)
+        nTime = int_to_hex(self.time, 4)
         inputs = self.inputs()
         outputs = self.outputs()
 
@@ -827,9 +845,9 @@ class Transaction:
             marker = '00'
             flag = '01'
             witness = ''.join(self.serialize_witness(x, estimate_size=estimate_size) for x in inputs)
-            return nVersion + marker + flag + txins + txouts + witness + nLocktime
+            return nVersion + marker + flag + txins + txouts + witness + nLocktime + nTime
         else:
-            return nVersion + txins + txouts + nLocktime
+            return nVersion + txins + txouts + nLocktime + nTime
 
     def txid(self) -> Optional[str]:
         if self._cached_txid is None:
