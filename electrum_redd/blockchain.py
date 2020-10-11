@@ -32,6 +32,7 @@ from . import constants
 from .util import bfh, bh2u
 from .simple_config import SimpleConfig
 from .logging import get_logger, Logger
+from .kgw import KGW
 
 try:
     import scrypt
@@ -45,7 +46,10 @@ _logger = get_logger(__name__)
 
 HEADER_SIZE = 80  # bytes
 MAX_TARGET = 0x00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-
+MAX_NBITS = 0x1e0FFFFF
+# Start checking POW after block 44877
+# http://live.reddcoin.com/block/4253e7618d40aded00d11b664e874245ae74d55b976f4ac087d1a9db2f5f3cda
+CHECK_POW_FROM_NTIME = 1394048078
 
 class MissingHeader(Exception):
     pass
@@ -204,6 +208,11 @@ class Blockchain(Logger):
         self._prev_hash = prev_hash  # blockhash immediately before forkpoint
         self.lock = threading.RLock()
         self.update_size()
+        self.kgw = KGW()
+        self.cache_headers = []
+        self.cache_kgw_size = 7 * 24 * 60
+        self.chunk_size = 2016
+        self.check_pow_from_ntime = 1394048078
 
     def with_lock(func):
         def func_wrapper(self, *args, **kwargs):
@@ -307,37 +316,54 @@ class Blockchain(Logger):
         self._size = os.path.getsize(p)//HEADER_SIZE if os.path.exists(p) else 0
 
     @classmethod
-    def verify_header(cls, header: dict, prev_hash: str, target: int, expected_header_hash: str=None) -> None:
+    def verify_header(cls, header: dict, prev_header: str, bits: int, target: int, expected_header_hash: str=None) -> None:
+        if header.get('timestamp') < CHECK_POW_FROM_NTIME:
+            return
+
+        prev_hash = hash_header(prev_header)
         _hash = hash_header(header)
-        _powhash = pow_hash_header(header)
+        height = header.get('block_height')
+
         if expected_header_hash and expected_header_hash != _hash:
             raise Exception("hash mismatches with expected: {} vs {}".format(expected_header_hash, _hash))
         if prev_hash != header.get('prev_block_hash'):
             raise Exception("prev hash mismatch: %s vs %s" % (prev_hash, header.get('prev_block_hash')))
         if constants.net.TESTNET:
             return
-        bits = cls.target_to_bits(target)
-        if bits != header.get('bits'):
+        if bits != header.get('bits') and (height <= 260799 or height >= 270800 + (7 * 24 * 60)): # TODO fix the target calc around the posv switch
             raise Exception("bits mismatch: %s vs %s" % (bits, header.get('bits')))
-        block_hash_as_num = int.from_bytes(bfh(_powhash), byteorder='big')
-        if block_hash_as_num > target:
-            raise Exception(f"insufficient proof of work: {block_hash_as_num} vs target {target}")
+
+        if height <= 260799:
+            _powhash = pow_hash_header(header)
+            if int('0x'+_powhash, 16) >= target:
+                raise Exception(f"insufficient proof of work: {int('0x'+_powhash, 16)} vs target {target}")
 
     def verify_chunk(self, index: int, data: bytes) -> None:
         num = len(data) // HEADER_SIZE
         start_height = index * 2016
-        prev_hash = self.get_hash(start_height - 1)
-        target = self.get_target(index-1)
-        for i in range(num):
-            height = start_height + i
-            try:
-                expected_header_hash = self.get_hash(height)
-            except MissingHeader:
-                expected_header_hash = None
-            raw_header = data[i*HEADER_SIZE : (i+1)*HEADER_SIZE]
-            header = deserialize_header(raw_header, index*2016 + i)
-            self.verify_header(header, prev_hash, target, expected_header_hash)
-            prev_hash = hash_header(header)
+        headers = [deserialize_header(data[i*HEADER_SIZE:(i+1)*HEADER_SIZE], start_height + i) for i in range(num)]
+
+        # get preceding headers to use in KGW
+        if len(self.cache_headers) == 0:
+            prev_chain = [self.read_header(x) for x in range((0, start_height - self.cache_kgw_size)[start_height - self.cache_kgw_size > 0], start_height)]
+        else:
+            prev_chain = self.cache_headers
+
+        prev_header = prev_chain[-1] if len(prev_chain) > 0 else None
+        chain_target = self.kgw.get_chain_target(prev_chain, headers)
+
+        for i, header in enumerate(headers):
+            height = header.get('block_height')
+            if height <= self.height():
+                prev_header = header
+                continue
+            bits, target = chain_target[i]
+            self.verify_header(header, prev_header, bits, target)
+            prev_header = header
+
+        self.cache_headers = prev_chain + headers
+        if len(self.cache_headers) > self.cache_kgw_size:
+            self.cache_headers = self.cache_headers[-self.cache_kgw_size:]
 
     @with_lock
     def path(self):
@@ -537,30 +563,18 @@ class Blockchain(Logger):
             return ts
         return self.read_header(height).get('timestamp')
 
-    def get_target(self, index: int) -> int:
+    def get_target(self, index: int, prev_chain = {}) -> int:
         # compute target from chunk x, used in chunk x+1
         if constants.net.TESTNET:
-            return 0
+            return 0, 0
         if index == -1:
-            return MAX_TARGET
+            return MAX_NBITS, MAX_TARGET
         if index < len(self.checkpoints):
             h, t, _ = self.checkpoints[index]
             return t
         # new target
-        first = self.read_header(index * 2016)
-        last = self.read_header(index * 2016 + 2015)
-        if not first or not last:
-            raise MissingHeader()
-        bits = last.get('bits')
-        target = self.bits_to_target(bits)
-        nActualTimespan = last.get('timestamp') - first.get('timestamp')
-        nTargetTimespan = 14 * 24 * 60 * 60
-        nActualTimespan = max(nActualTimespan, nTargetTimespan // 4)
-        nActualTimespan = min(nActualTimespan, nTargetTimespan * 4)
-        new_target = min(MAX_TARGET, (target * nActualTimespan) // nTargetTimespan)
-        # not any target can be represented in 32 bits:
-        new_target = self.bits_to_target(self.target_to_bits(new_target))
-        return new_target
+        prev_chain = [self.read_header(x) for x in range((0, index - self.cache_kgw_size)[index - self.cache_kgw_size > 0], index)]
+        return self.kgw.get_target(prev_chain)
 
     @classmethod
     def bits_to_target(cls, bits: int) -> int:
@@ -586,7 +600,7 @@ class Blockchain(Logger):
     def chainwork_of_header_at_height(self, height: int) -> int:
         """work done by single header at given height"""
         chunk_idx = height // 2016 - 1
-        target = self.get_target(chunk_idx)
+        bits, target = self.get_target(chunk_idx)
         work = ((2 ** 256 - target - 1) // (target + 1)) + 1
         return work
 
@@ -625,6 +639,9 @@ class Blockchain(Logger):
             return False
         if height == 0:
             return hash_header(header) == constants.net.GENESIS
+        prev_header = self.read_header(height - 1)
+        if not prev_header:
+            return False
         try:
             prev_hash = self.get_hash(height - 1)
         except:
@@ -632,11 +649,11 @@ class Blockchain(Logger):
         if prev_hash != header.get('prev_block_hash'):
             return False
         try:
-            target = self.get_target(height // 2016 - 1)
+            bits, target = self.get_target(height)
         except MissingHeader:
             return False
         try:
-            self.verify_header(header, prev_hash, target)
+            self.verify_header(header, prev_header, bits, target)
         except BaseException as e:
             return False
         return True
