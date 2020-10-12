@@ -1,10 +1,10 @@
 [app]
 
 # (str) Title of your application
-title = Electrum Redd
+title = Electrum-Redd
 
 # (str) Package name
-package.name = ElectrumRedd
+package.name = Electrum_Redd
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.electrum_redd
@@ -20,9 +20,9 @@ source.exclude_exts = spec
 
 # (list) List of directory to exclude (let empty to not exclude anything)
 source.exclude_dirs = bin, build, dist, contrib,
-    electrum/tests,
-    electrum/gui/qt,
-    electrum/gui/kivy/theming/light,
+    electrum_redd/tests,
+    electrum_redd/gui/qt,
+    electrum_redd/gui/kivy/theming/light,
     packages/qdarkstyle,
     packages/qtpy
 # (list) List of exclusions using pattern matching

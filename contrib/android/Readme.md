@@ -24,7 +24,7 @@ folder.
 2. Build image
 
     ```
-    $ sudo docker build -t electrum-android-builder-img contrib/android
+    $ sudo docker build -t electrum-redd-android-builder-img contrib/android
     ```
 
 3. Build locale files
@@ -44,12 +44,12 @@ folder.
     ```
     $ mkdir --parents $PWD/.buildozer/.gradle
     $ sudo docker run -it --rm \
-        --name electrum-android-builder-cont \
+        --name electrum-redd-android-builder-cont \
         -v $PWD:/home/user/wspace/electrum-redd \
         -v $PWD/.buildozer/.gradle:/home/user/.gradle \
         -v ~/.keystore:/home/user/.keystore \
         --workdir /home/user/wspace/electrum-redd \
-        electrum-android-builder-img \
+        electrum-redd-android-builder-img \
         ./contrib/android/make_apk
     ```
     This mounts the project dir inside the container,
@@ -80,7 +80,7 @@ $ sudo docker run -it --rm \
     -v $PWD:/home/user/wspace/electrum-redd \
     -v $PWD/.buildozer/.gradle:/home/user/.gradle \
     --workdir /home/user/wspace/electrum-redd \
-    electrum-android-builder-img
+    electrum-redd-android-builder-img
 ```
 
 
