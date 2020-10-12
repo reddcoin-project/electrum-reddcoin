@@ -1,0 +1,15 @@
+diff --git a/pythonforandroid/recipes/scrypt/__init__.py b/pythonforandroid/recipes/scrypt/__init__.py
+index 7f235396..d8657c81 100644
+--- a/pythonforandroid/recipes/scrypt/__init__.py
++++ b/pythonforandroid/recipes/scrypt/__init__.py
+@@ -3,8 +3,8 @@ from pythonforandroid.recipe import CythonRecipe
+ 
+ class ScryptRecipe(CythonRecipe):
+ 
+-    version = '0.8.6'
+-    url = 'https://bitbucket.org/mhallin/py-scrypt/get/v{version}.zip'
++    version = '0.8.7'
++    url = 'https://github.com/holgern/py-scrypt/archive/v{version}.zip'
+     depends = ['setuptools', 'openssl']
+     call_hostpython_via_targetpython = False
+     patches = ["remove_librt.patch"]

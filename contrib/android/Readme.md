@@ -45,10 +45,10 @@ folder.
     $ mkdir --parents $PWD/.buildozer/.gradle
     $ sudo docker run -it --rm \
         --name electrum-android-builder-cont \
-        -v $PWD:/home/user/wspace/electrum \
+        -v $PWD:/home/user/wspace/electrum-redd \
         -v $PWD/.buildozer/.gradle:/home/user/.gradle \
         -v ~/.keystore:/home/user/.keystore \
-        --workdir /home/user/wspace/electrum \
+        --workdir /home/user/wspace/electrum-redd \
         electrum-android-builder-img \
         ./contrib/android/make_apk
     ```
@@ -74,12 +74,12 @@ $ adb shell monkey -p org.electrum.electrum 1
 ```
 
 
-### How do I get an interactive shell inside docker?
+## How do I get an interactive shell inside docker?
 ```
 $ sudo docker run -it --rm \
-    -v $PWD:/home/user/wspace/electrum \
+    -v $PWD:/home/user/wspace/electrum-redd \
     -v $PWD/.buildozer/.gradle:/home/user/.gradle \
-    --workdir /home/user/wspace/electrum \
+    --workdir /home/user/wspace/electrum-redd \
     electrum-android-builder-img
 ```
 

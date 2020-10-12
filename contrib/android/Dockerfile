@@ -155,6 +155,9 @@ RUN cd /opt \
     && git checkout "94cfcb8d591c11d6ad0e11f129b08c1e27a161c5^{commit}" \
     && python3 -m pip install --user -e .
 
+# copy patch for scrypt source url change
+COPY ./update_url.diff ./
+
 # install python-for-android
 RUN cd /opt \
     && git clone https://github.com/kivy/python-for-android \
@@ -163,6 +166,7 @@ RUN cd /opt \
     && git fetch --all \
     # commit: from branch sombernight/electrum_20200703
     && git checkout "0dd2ce87a8f380d20505ca5dc1e2d2357b4a08fc^{commit}" \
+    && git apply ${WORK_DIR}/update_url.diff \
     && python3 -m pip install --user -e .
 
 # build env vars

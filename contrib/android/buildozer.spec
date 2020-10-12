@@ -1,13 +1,13 @@
 [app]
 
 # (str) Title of your application
-title = Electrum
+title = Electrum Redd
 
 # (str) Package name
-package.name = Electrum
+package.name = ElectrumRedd
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.electrum
+package.domain = org.electrum_redd
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -30,7 +30,7 @@ source.exclude_patterns = Makefile,setup*
 
 # (str) Application versioning (method 1)
 version.regex = APK_VERSION = '(.*)'
-version.filename = %(source.dir)s/electrum/version.py
+version.filename = %(source.dir)s/electrum_redd/version.py
 
 # (str) Application versioning (method 2)
 #version = 1.9.8
@@ -47,14 +47,16 @@ requirements =
     kivy==39c17457bae91baf8fe710dc989791e45879f136,
     libffi,
     libsecp256k1,
-    cryptography
+    cryptography,
+    numpy,
+    scrypt
 
 # (str) Presplash of the application
 #presplash.filename = %(source.dir)s/gui/kivy/theming/splash.png
-presplash.filename = %(source.dir)s/electrum/gui/icons/electrum_presplash.png
+presplash.filename = %(source.dir)s/electrum_redd/gui/icons/electrum_presplash.png
 
 # (str) Icon of the application
-icon.filename = %(source.dir)s/electrum/gui/icons/electrum_launcher.png
+icon.filename = %(source.dir)s/electrum_redd/gui/icons/electrum_launcher.png
 
 # (str) Supported orientation (one of landscape, portrait or all)
 orientation = portrait
@@ -106,7 +108,7 @@ android.ant_path = /opt/android/apache-ant
 
 # (list) List of Java files to add to the android project (can be java or a
 # directory containing the files)
-android.add_src = electrum/gui/kivy/data/java-classes/
+android.add_src = electrum_redd/gui/kivy/data/java-classes/
 
 android.gradle_dependencies = me.dm7.barcodescanner:zxing:1.9.8
 
