@@ -14,14 +14,14 @@ set -e
 mkdir -p signed >/dev/null 2>&1
 mkdir -p signed/stripped >/dev/null 2>&1
 
-version=`python3 -c "import electrum; print(electrum.version.ELECTRUM_VERSION)"`
+version=`python3 -c "import electrum_redd; print(electrum_redd.version.ELECTRUM_VERSION)"`
 
 echo "Found $(ls dist/*.exe | wc -w) files to verify."
 
 for mine in $(ls dist/*.exe); do
     echo "---------------"
     f=$(basename $mine)
-    echo "Downloading https://download.electrum.org/$version/$f"
+    echo "Downloading https://download.reddcoin.com/$version/$f"
     wget -q https://download.electrum.org/$version/$f -O signed/$f
     out="signed/stripped/$f"
     # Remove PE signature from signed binary
