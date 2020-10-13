@@ -1,2 +1,4 @@
 PyQt5<5.15
 cryptography>=2.1
+numpy>=1.19.2
+scrypt>=0.8.17
