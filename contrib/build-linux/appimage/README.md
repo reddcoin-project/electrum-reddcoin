@@ -1,5 +1,5 @@
-AppImage binary for Electrum
-============================
+AppImage binary for Electrum-Redd
+=================================
 
 ✓ _This binary should be reproducible, meaning you should be able to generate
    binaries that match the official releases._
@@ -25,18 +25,18 @@ see [issue #5159](https://github.com/spesmilo/electrum/issues/5159).
 2. Build image
 
     ```
-    $ sudo docker build -t electrum-appimage-builder-img contrib/build-linux/appimage
+    $ sudo docker build -t electrum-redd-appimage-builder-img contrib/build-linux/appimage
     ```
 
 3. Build binary
 
     ```
     $ sudo docker run -it \
-        --name electrum-appimage-builder-cont \
+        --name electrum-redd-appimage-builder-cont \
         -v $PWD:/opt/electrum \
         --rm \
         --workdir /opt/electrum/contrib/build-linux/appimage \
-        electrum-appimage-builder-img \
+        electrum-redd-appimage-builder-img \
         ./build.sh
     ```
 

@@ -20,7 +20,7 @@ folder.
 2. Build image
 
     ```
-    $ sudo docker build -t electrum-sdist-builder-img contrib/build-linux/sdist
+    $ sudo docker build -t electrum-redd-sdist-builder-img contrib/build-linux/sdist
     ```
 
 3. Build source tarballs
@@ -34,7 +34,7 @@ folder.
         umask 0022 && \
         mkdir -p $FRESH_CLONE && \
         cd $FRESH_CLONE  && \
-        git clone https://github.com/spesmilo/electrum.git && \
+        git clone https://github.com/reddcoin-project/electrum-redd.git && \
         cd electrum
     ```
 
@@ -42,11 +42,11 @@ folder.
     ```
     $ git checkout $REV
     $ sudo docker run -it \
-        --name electrum-sdist-builder-cont \
+        --name electrum-redd-sdist-builder-cont \
         -v $PWD:/opt/electrum \
         --rm \
         --workdir /opt/electrum/contrib/build-linux/sdist \
-        electrum-sdist-builder-img \
+        electrum-redd-sdist-builder-img \
         ./build.sh
     ```
 4. The generated distributables are in `./dist`.
