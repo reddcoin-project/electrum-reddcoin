@@ -219,6 +219,26 @@ class BitStamp(ExchangeBase):
             return {ccy: Decimal(json['last'])}
         return {}
 
+class Bittrex(ExchangeBase):
+
+    async def get_currencies(self):
+        return ['BTC']
+
+    async def get_rates(self, ccy):
+        json = await self.get_json('api.bittrex.com', '/v3/markets/RDD-%s/ticker' % ccy.upper())
+        return {ccy: Decimal(json['lastTradeRate'])}
+
+
+    def history_ccys(self):
+        # Bittrex seems to have historical data for all ccys it supports
+        return CURRENCIES[self.name()]
+
+    async def request_history(self, ccy):
+        history = await self.get_json('api.bittrex.com',
+                                      '/v3/coins/reddcoin/market_chart?vs_currency=%s&days=max' % ccy)
+
+        return dict([(datetime.utcfromtimestamp(h[0]/1000).strftime('%Y-%m-%d'), h[1])
+                     for h in history['prices']])
 
 class Bitvalor(ExchangeBase):
 
