@@ -23,7 +23,7 @@ from .logging import Logger
 
 
 DEFAULT_ENABLED = False
-DEFAULT_CURRENCY = "EUR"
+DEFAULT_CURRENCY = "USD"
 DEFAULT_EXCHANGE = "CoinGecko"  # default exchange should ideally provide historical rates
 
 
@@ -183,7 +183,7 @@ class BitcoinVenezuela(ExchangeBase):
 class Bitbank(ExchangeBase):
 
     async def get_rates(self, ccy):
-        json = await self.get_json('public.bitbank.cc', '/btc_jpy/ticker')
+        json = await self.get_json('public.bitbank.cc', '/rdd_jpy/ticker')
         return {'JPY': Decimal(json['data']['last'])}
 
 
@@ -215,7 +215,7 @@ class BitStamp(ExchangeBase):
 
     async def get_rates(self, ccy):
         if ccy in CURRENCIES[self.name()]:
-            json = await self.get_json('www.bitstamp.net', f'/api/v2/ticker/btc{ccy.lower()}/')
+            json = await self.get_json('www.bitstamp.net', f'/api/v2/ticker/rdd{ccy.lower()}/')
             return {ccy: Decimal(json['last'])}
         return {}
 
@@ -237,7 +237,7 @@ class BlockchainInfo(ExchangeBase):
 class Bylls(ExchangeBase):
 
     async def get_rates(self, ccy):
-        json = await self.get_json('bylls.com', '/api/price?from_currency=BTC&to_currency=CAD')
+        json = await self.get_json('bylls.com', '/api/price?from_currency=RDD&to_currency=CAD')
         return {'CAD': Decimal(json['public_price']['to_price'])}
 
 
@@ -245,14 +245,14 @@ class Coinbase(ExchangeBase):
 
     async def get_rates(self, ccy):
         json = await self.get_json('api.coinbase.com',
-                             '/v2/exchange-rates?currency=BTC')
+                             '/v2/exchange-rates?currency=RDD')
         return {ccy: Decimal(rate) for (ccy, rate) in json["data"]["rates"].items()}
 
 
 class CoinCap(ExchangeBase):
 
     async def get_rates(self, ccy):
-        json = await self.get_json('api.coincap.io', '/v2/rates/bitcoin/')
+        json = await self.get_json('api.coincap.io', '/v2/rates/reddcoin/')
         return {'USD': Decimal(json['data']['rateUsd'])}
 
     def history_ccys(self):
@@ -262,7 +262,7 @@ class CoinCap(ExchangeBase):
         # Currently 2000 days is the maximum in 1 API call
         # (and history starts on 2017-03-23)
         history = await self.get_json('api.coincap.io',
-                                      '/v2/assets/bitcoin/history?interval=d1&limit=2000')
+                                      '/v2/assets/reddcoin/history?interval=d1&limit=2000')
         return dict([(datetime.utcfromtimestamp(h['time']/1000).strftime('%Y-%m-%d'), h['priceUsd'])
                      for h in history['data']])
 
@@ -298,10 +298,15 @@ class CoinDesk(ExchangeBase):
 
 class CoinGecko(ExchangeBase):
 
+    async def get_currencies(self):
+        dicts = await self.get_json('api.coingecko.com',
+                                    '/api/v3/simple/supported_vs_currencies')
+        return [d.upper() for d in dicts]
+
     async def get_rates(self, ccy):
-        json = await self.get_json('api.coingecko.com', '/api/v3/exchange_rates')
-        return dict([(ccy.upper(), Decimal(d['value']))
-                     for ccy, d in json['rates'].items()])
+        json = await self.get_json('api.coingecko.com', '/api/v3/simple/price?ids=reddcoin&vs_currencies=%s' % ccy)
+        return dict([(h[0].upper(), Decimal(h[1]))
+                     for h in json['reddcoin'].items()])
 
     def history_ccys(self):
         # CoinGecko seems to have historical data for all ccys it supports
@@ -309,7 +314,7 @@ class CoinGecko(ExchangeBase):
 
     async def request_history(self, ccy):
         history = await self.get_json('api.coingecko.com',
-                                      '/api/v3/coins/bitcoin/market_chart?vs_currency=%s&days=max' % ccy)
+                                      '/api/v3/coins/reddcoin/market_chart?vs_currency=%s&days=max' % ccy)
 
         return dict([(datetime.utcfromtimestamp(h[0]/1000).strftime('%Y-%m-%d'), h[1])
                      for h in history['prices']])
@@ -363,7 +368,7 @@ class TheRockTrading(ExchangeBase):
 
     async def get_rates(self, ccy):
         json = await self.get_json('api.therocktrading.com',
-                             '/v1/funds/BTCEUR/ticker')
+                             '/v1/funds/RDDEUR/ticker')
         return {'EUR': Decimal(json['last'])}
 
 
@@ -386,21 +391,21 @@ class Winkdex(ExchangeBase):
 
 class Zaif(ExchangeBase):
     async def get_rates(self, ccy):
-        json = await self.get_json('api.zaif.jp', '/api/1/last_price/btc_jpy')
+        json = await self.get_json('api.zaif.jp', '/api/1/last_price/rdd_jpy')
         return {'JPY': Decimal(json['last_price'])}
 
 
 class Bitragem(ExchangeBase):
 
     async def get_rates(self,ccy):
-        json = await self.get_json('api.bitragem.com', '/v1/index?asset=BTC&market=BRL')
+        json = await self.get_json('api.bitragem.com', '/v1/index?asset=RDD&market=BRL')
         return {'BRL': Decimal(json['response']['index'])}
 
 
 class Biscoint(ExchangeBase):
 
     async def get_rates(self,ccy):
-        json = await self.get_json('api.biscoint.io', '/v1/ticker?base=BTC&quote=BRL')
+        json = await self.get_json('api.biscoint.io', '/v1/ticker?base=RDD&quote=BRL')
         return {'BRL': Decimal(json['data']['last'])}
 
 
@@ -501,7 +506,7 @@ class FxThread(ThreadJob):
         return text.replace(',', '') # FIXME use THOUSAND_SEPARATOR in util
 
     def ccy_amount_str(self, amount, commas):
-        prec = CCY_PRECISIONS.get(self.ccy, 2)
+        prec = CCY_PRECISIONS.get(self.ccy, 8)
         fmt_str = "{:%s.%df}" % ("," if commas else "", max(0, prec)) # FIXME use util.THOUSAND_SEPARATOR and util.DECIMAL_POINT
         try:
             rounded_amount = round(amount, prec)
