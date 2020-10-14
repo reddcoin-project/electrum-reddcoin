@@ -1,5 +1,17 @@
 {
+    "electrum01.reddcoin.com": {
+        "pruning": "-",
+        "s": "50002",
+        "t": "50001",
+        "version": "1.4"
+    },
     "electrum02.reddcoin.com": {
+        "pruning": "-",
+        "s": "50002",
+        "t": "50001",
+        "version": "1.4"
+    },
+    "electrum03.reddcoin.com": {
         "pruning": "-",
         "s": "50002",
         "t": "50001",
