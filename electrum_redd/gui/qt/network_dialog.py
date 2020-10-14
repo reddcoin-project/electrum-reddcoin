@@ -333,7 +333,7 @@ class NetworkChoiceLayout(object):
         server = net_params.server
         auto_connect = net_params.auto_connect
         if not self.server_e.hasFocus():
-            self.server_e.setText(server.net_addr_str())
+            self.server_e.setText(server.to_friendly_name())
         self.autoconnect_cb.setChecked(auto_connect)
 
         percent_str = "%.2f "%(self.network.is_header_downloading_pc()) + "%"
