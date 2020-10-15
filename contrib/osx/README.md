@@ -4,7 +4,7 @@ Building macOS binaries
 ✗ _This script does not produce reproducible output (yet!).
    Please help us remedy this._
 
-This guide explains how to build Electrum binaries for macOS systems.
+This guide explains how to build Electrum-Redd binaries for macOS systems.
 
 
 ## Building the binary
@@ -57,12 +57,12 @@ On newer Mac, run:
 Move `prebuilt_qr` to El Capitan: `contrib/osx/CalinsQRReader/prebuilt_qr`.
 
 
-#### 2. Build Electrum
+#### 2. Build Electrum-Redd
 
-    cd electrum
+    cd electrum-redd
     ./contrib/osx/make_osx
 
-This creates both a folder named Electrum.app and the .dmg file.
+This creates both a folder named Electrum-Redd.app and the .dmg file.
 
 If you want the binaries codesigned for MacOS and notarised by Apple's central server,
 provide these env vars to the `make_osx` script:
