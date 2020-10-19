@@ -9,7 +9,7 @@ Electrum-Redd is a port of Electrum, the Bitcoin wallet, to Reddcoin.
   Original Author: Thomas Voegtlin
   Port Maintainer: John Nash (Gnasher) forked for Reddcoin
   Language: Python (>= 3.6)
-  Homepage: https://wallet.reddcoin.com/
+  Homepage: https://electrum.reddcoin.com/
 
 
 .. image:: https://travis-ci.org/spesmilo/electrum.svg?branch=master
