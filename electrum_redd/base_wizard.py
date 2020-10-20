@@ -658,14 +658,15 @@ class BaseWizard(Logger):
         if message is None:
             message = ' '.join([
                 _("The type of addresses used by your wallet will depend on your seed."),
-                _("Segwit wallets use bech32 addresses, defined in BIP173."),
-                _("Please note that websites and other wallets may not support these addresses yet."),
-                _("Thus, you might want to keep using a non-segwit wallet in order to be able to receive reddcoins during the transition period.")
+                _(" Reddcoin currently supports standard addresses only.")
+                #_("Segwit wallets use bech32 addresses, defined in BIP173."),
+                #_("Please note that websites and other wallets may not support these addresses yet."),
+                #_("Thus, you might want to keep using a non-segwit wallet in order to be able to receive reddcoins during the transition period.")
             ])
         if choices is None:
             choices = [
-                ('create_segwit_seed', _('Segwit')),
-                ('create_standard_seed', _('Legacy')),
+                # ('create_segwit_seed', _('Segwit')), #TODO we will come back to segwit
+                ('create_standard_seed', _('Standard')),
             ]
         self.choice_dialog(title=title, message=message, choices=choices, run_next=self.run)
 
