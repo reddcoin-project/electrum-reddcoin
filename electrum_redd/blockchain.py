@@ -24,6 +24,7 @@ import os
 import threading
 import time
 from typing import Optional, Dict, Mapping, Sequence
+import certifi
 
 from . import util
 from .bitcoin import hash_encode, int_to_hex, rev_hex
@@ -33,6 +34,11 @@ from .util import bfh, bh2u
 from .simple_config import SimpleConfig
 from .logging import get_logger, Logger
 from .kgw import KGW
+from .version import ELECTRUM_VERSION
+
+# On Android urllib doesn't have certs by default and need to be explicitly loaded.
+if 'ANDROID_DATA' in os.environ:
+    os.environ['SSL_CERT_FILE'] = certifi.where()
 
 try:
     import scrypt
@@ -174,18 +180,65 @@ _CHAINWORK_CACHE = {
 }  # type: Dict[str, int]
 
 
+def downloading_headers():
+    b = get_best_chain()
+    return b.download_headers
+
+
 def init_headers_file_for_best_chain():
     b = get_best_chain()
     filename = b.path()
     length = HEADER_SIZE * len(constants.net.CHECKPOINTS) * 2016
+
+    def reporthook(count, block_size, total_size):
+        global start_time, current_time
+        if count == 0:
+            start_time = time.time()
+            current_time = 0
+            return
+        duration = time.time() - start_time
+        progress_size = int(count * block_size)
+        speed = int(progress_size / (1024 * duration))
+        percent = min((count * block_size * 100 / total_size),100)
+        if (percent==100) or (time.time() - current_time > 1):
+            _logger.info(f"header download ... {percent:.2f}%, size {progress_size / (1024 * 1024):.2f} MB, {speed} KB/s, {duration:.2f} seconds passed")
+            current_time = time.time()
+
+    def download_thread():
+        try:
+            import urllib.request, socket
+            socket.setdefaulttimeout(60 * 5)
+            _logger.info(f"downloading {constants.net.HEADERS_URL}")
+
+            opener = urllib.request.build_opener()
+            opener.addheaders = [('User-Agent', 'Electrum-Redd/' + ELECTRUM_VERSION)]
+            urllib.request.install_opener(opener)
+            urllib.request.urlretrieve(constants.net.HEADERS_URL, filename + '.tmp', reporthook)
+            os.rename(filename + '.tmp', filename)
+            _logger.info("done.")
+        except Exception as e:
+            _logger.error(f"download failed. Reason {e} while creating file {filename}")
+            open(filename, 'wb+').close()
+        with b.lock:
+            b.update_size()
+        b.download_headers = False
+
     if not os.path.exists(filename) or os.path.getsize(filename) < length:
-        with open(filename, 'wb') as f:
-            if length > 0:
-                f.seek(length - 1)
-                f.write(b'\x00')
-        util.ensure_sparse_file(filename)
+        b.download_headers = True
+        t = threading.Thread(target=download_thread)
+        t.daemon = True
+        t.start()
+
     with b.lock:
         b.update_size()
+
+    #     with open(filename, 'wb') as f:
+    #         if length > 0:
+    #             f.seek(length - 1)
+    #             f.write(b'\x00')
+    #     util.ensure_sparse_file(filename)
+    # with b.lock:
+    #     b.update_size()
 
 
 class Blockchain(Logger):
@@ -213,6 +266,7 @@ class Blockchain(Logger):
         self.cache_kgw_size = 7 * 24 * 60
         self.chunk_size = 2016
         self.check_pow_from_ntime = 1394048078
+        self.download_headers = False
 
     def with_lock(func):
         def func_wrapper(self, *args, **kwargs):

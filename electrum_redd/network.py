@@ -275,6 +275,8 @@ class Network(Logger, NetworkRetryManager[ServerAddr]):
 
         blockchain.read_blockchains(self.config)
         blockchain.init_headers_file_for_best_chain()
+        # while blockchain.downloading_headers():
+        #     time.sleep(1)
         self.logger.info(f"blockchains {list(map(lambda b: b.forkpoint, blockchain.blockchains.values()))}")
         self._blockchain_preferred_block = self.config.get('blockchain_preferred_block', None)  # type: Dict[str, Any]
         if self._blockchain_preferred_block is None:
@@ -740,6 +742,8 @@ class Network(Logger, NetworkRetryManager[ServerAddr]):
     @ignore_exceptions  # do not kill outer taskgroup
     @log_exceptions
     async def _run_new_interface(self, server: ServerAddr):
+        if blockchain.downloading_headers():
+            return
         if server in self.interfaces or server in self._connecting:
             return
         self._connecting.add(server)
