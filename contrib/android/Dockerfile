@@ -157,6 +157,8 @@ RUN cd /opt \
 
 # copy patch for scrypt source url change
 COPY ./update_url.diff ./
+# copy patch for x86 host type update
+COPY ./host-type.diff ./
 
 # install python-for-android
 RUN cd /opt \
@@ -167,6 +169,7 @@ RUN cd /opt \
     # commit: from branch sombernight/electrum_20200703
     && git checkout "0dd2ce87a8f380d20505ca5dc1e2d2357b4a08fc^{commit}" \
     && git apply ${WORK_DIR}/update_url.diff \
+    && git apply ${WORK_DIR}/host-type.diff \
     && python3 -m pip install --user -e .
 
 # build env vars

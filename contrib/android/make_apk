@@ -33,6 +33,10 @@ if [[ -n "$1"  && "$1" == "release" ]] ; then
     make release
     export APP_ANDROID_ARCH=arm64-v8a
     make release
+    export APP_ANDROID_ARCH=x86
+    make release
+    export APP_ANDROID_ARCH=x86_64
+    make release
 else
     export P4A_DEBUG_KEYSTORE="$CONTRIB_ANDROID"/android_debug.keystore
     export P4A_DEBUG_KEYSTORE_PASSWD=unsafepassword
@@ -48,6 +52,10 @@ else
     fi
     # build two apks (only one on Travis CI)
     export APP_ANDROID_ARCH=armeabi-v7a
+    make apk
+    export APP_ANDROID_ARCH=x86
+    make apk
+    export APP_ANDROID_ARCH=x86_64
     make apk
     if [ ! $CI ]; then
         export APP_ANDROID_ARCH=arm64-v8a

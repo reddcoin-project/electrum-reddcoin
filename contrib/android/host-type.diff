@@ -1,0 +1,19 @@
+diff --git a/pythonforandroid/recipes/libsecp256k1/__init__.py b/pythonforandroid/recipes/libsecp256k1/__init__.py
+index caa5a6fc..96f32d1e 100644
+--- a/pythonforandroid/recipes/libsecp256k1/__init__.py
++++ b/pythonforandroid/recipes/libsecp256k1/__init__.py
+@@ -17,9 +17,13 @@ class LibSecp256k1Recipe(Recipe):
+         with current_directory(self.get_build_dir(arch.arch)):
+             if not exists('configure'):
+                 shprint(sh.Command('./autogen.sh'), _env=env)
++            host = arch.toolchain_prefix
++            if 'x86' in host:
++                host += '-linux'
++
+             shprint(
+                 sh.Command('./configure'),
+-                '--host=' + arch.toolchain_prefix,
++                '--host=' + host,
+                 '--prefix=' + self.ctx.get_python_install_dir(),
+                 '--enable-shared',
+                 '--enable-module-recovery',
