@@ -35,11 +35,16 @@ Popup:
                 text: _('Developers')
                 size_hint_x: 0.4
             TopLabel:
-                text: '\n'.join(['Thomas Voegtlin', 'SomberNight'])
+                text: '\n'.join(['John (Gnasher) Nash', 'Reddcoin Developers','Thomas Voegtlin', 'SomberNight'])
                 size_hint_x: 0.6
-        TopLabel:
-            text: _('Distributed by Electrum Technologies GmbH')
-            padding: '0dp', '20dp'
+            TopLabel:
+                text: _('Distributed by:')
+                padding: '0dp', '20dp'
+                size_hint_x: 0.4
+            TopLabel:
+                text: _('Reddcoin')
+                padding: '0dp', '20dp'
+                size_hint_x: 0.6
         Widget:
             size_hint: None, 0.5
         BoxLayout:
