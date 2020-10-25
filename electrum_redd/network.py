@@ -743,6 +743,7 @@ class Network(Logger, NetworkRetryManager[ServerAddr]):
     @log_exceptions
     async def _run_new_interface(self, server: ServerAddr):
         if blockchain.downloading_headers():
+            util.trigger_callback('network_updated')
             return
         if server in self.interfaces or server in self._connecting:
             return
@@ -1111,6 +1112,14 @@ class Network(Logger, NetworkRetryManager[ServerAddr]):
         but it is the tip of that branch (even if main interface is behind).
         """
         return self.blockchain().height()
+
+    def is_header_downloading(self):
+        """Downloading Headers True|False"""
+        return self.blockchain().download_headers
+
+    def is_header_downloading_pc(self):
+        """Downloading Headers percent"""
+        return self.blockchain().download_headers_pc
 
     def export_checkpoints(self, path):
         """Run manually to generate blockchain checkpoints.

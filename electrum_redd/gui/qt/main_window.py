@@ -978,11 +978,16 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, Logger):
                 else:
                     icon = read_QIcon("status_connected_proxy%s.png"%fork_str)
         else:
-            if self.network.proxy:
+            icon = read_QIcon("status_disconnected.png")
+            if self.network.is_header_downloading():
+                self.percent_dl = self.network.is_header_downloading_pc()
+                text = _("Downloading Headers {:.2f}%").format(self.percent_dl)
+                icon = read_QIcon("status_download.png")
+            elif self.network.proxy:
                 text = "{} ({})".format(_("Not connected"), _("proxy enabled"))
             else:
                 text = _("Not connected")
-            icon = read_QIcon("status_disconnected.png")
+
 
         self.tray.setToolTip("%s (%s)" % (text, self.wallet.basename()))
         self.balance_label.setText(text)

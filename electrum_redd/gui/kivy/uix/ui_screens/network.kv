@@ -42,6 +42,12 @@ Popup:
 
                 CardSeparator
                 SettingsItem:
+                    value: "%.2f" % app.percent_dl
+                    title: _("Download Blockchain Headers") + ': ' + self.value + '%'
+                    description: _('Block headers download progress')
+
+                CardSeparator
+                SettingsItem:
                     value: "%d blocks" % app.num_blocks
                     title: _("Blockchain") + ': ' + self.value
                     description: _('Verified block headers')

@@ -291,11 +291,17 @@ class NetworkChoiceLayout(object):
         grid.addWidget(self.height_label, 3, 1)
         grid.addWidget(HelpButton(msg), 3, 4)
 
+        self.download_pc_label = QLabel('')
+        msg = _('This is the percent download of the blockchain header file.')
+        grid.addWidget(QLabel(_('Headers Download') + ':'), 4, 0)
+        grid.addWidget(self.download_pc_label, 4, 1)
+        grid.addWidget(HelpButton(msg), 4, 4)
+
         self.split_label = QLabel('')
-        grid.addWidget(self.split_label, 4, 0, 1, 3)
+        grid.addWidget(self.split_label, 5, 0, 1, 3)
 
         self.nodes_list_widget = NodesListWidget(self)
-        grid.addWidget(self.nodes_list_widget, 6, 0, 1, 5)
+        grid.addWidget(self.nodes_list_widget, 7, 0, 1, 5)
 
         vbox = QVBoxLayout()
         vbox.addWidget(tabs)
@@ -329,6 +335,9 @@ class NetworkChoiceLayout(object):
         if not self.server_e.hasFocus():
             self.server_e.setText(server.net_addr_str())
         self.autoconnect_cb.setChecked(auto_connect)
+
+        percent_str = "%.2f "%(self.network.is_header_downloading_pc()) + "%"
+        self.download_pc_label.setText(percent_str)
 
         height_str = "%d "%(self.network.get_local_height()) + _('blocks')
         self.height_label.setText(height_str)

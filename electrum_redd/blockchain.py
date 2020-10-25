@@ -203,6 +203,7 @@ def init_headers_file_for_best_chain():
         if (percent==100) or (time.time() - current_time > 1):
             _logger.info(f"header download ... {percent:.2f}%, size {progress_size / (1024 * 1024):.2f} MB, {speed} KB/s, {duration:.2f} seconds passed")
             current_time = time.time()
+            b.download_headers_pc = percent
 
     def download_thread():
         try:
@@ -225,12 +226,14 @@ def init_headers_file_for_best_chain():
 
     if not os.path.exists(filename) or os.path.getsize(filename) < length:
         b.download_headers = True
+        b.download_headers_pc = 0
         t = threading.Thread(target=download_thread)
         t.daemon = True
         t.start()
 
     with b.lock:
         b.update_size()
+        b.download_headers_pc = 100
 
     #     with open(filename, 'wb') as f:
     #         if length > 0:
@@ -267,6 +270,7 @@ class Blockchain(Logger):
         self.chunk_size = 2016
         self.check_pow_from_ntime = 1394048078
         self.download_headers = False
+        self.download_headers_pc = 0
 
     def with_lock(func):
         def func_wrapper(self, *args, **kwargs):

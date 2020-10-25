@@ -104,6 +104,7 @@ class ElectrumWindow(App):
     fiat_balance = StringProperty('')
     is_fiat = BooleanProperty(False)
     blockchain_forkpoint = NumericProperty(0)
+    percent_dl = NumericProperty(0)
 
     lightning_gossip_num_peers = NumericProperty(0)
     lightning_gossip_num_nodes = NumericProperty(0)
@@ -887,6 +888,10 @@ class ElectrumWindow(App):
             return
         if self.network is None or not self.network.is_connected():
             status = _("Offline")
+            if self.network.is_header_downloading():
+                self.percent_dl = self.network.is_header_downloading_pc()
+                status = _("Downloading Headers {:.2f}%").format(self.percent_dl)
+            self.percent_dl = self.network.is_header_downloading_pc()
         elif self.network.is_connected():
             self.num_blocks = self.network.get_local_height()
             server_height = self.network.get_server_height()
