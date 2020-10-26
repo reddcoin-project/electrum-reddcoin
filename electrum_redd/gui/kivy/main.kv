@@ -417,16 +417,17 @@ BoxLayout:
             rgb: .6, .6, .6
         Rectangle:
             size: self.size
-            source: 'electrum/gui/kivy/data/background.png'
+            source: 'electrum_redd/gui/kivy/data/background.png'
 
     ActionBar:
 
         ActionView:
             id: av
             ActionPrevious:
+                app_icon: 'atlas://electrum_redd/gui/kivy/theming/light/logo'
+                app_icon_width: '100dp'
                 with_previous: False
-                size_hint: None, None
-                size: 0, 0
+                size_hint_x: .2
 
             ActionButton:
                 size_hint_x: None
