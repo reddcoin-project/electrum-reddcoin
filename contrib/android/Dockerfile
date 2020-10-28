@@ -67,7 +67,7 @@ RUN yes | ${ANDROID_SDK_MANAGER} --licenses > /dev/null
 
 # download platforms, API, build tools
 RUN ${ANDROID_SDK_MANAGER} "platforms;android-24" > /dev/null && \
-    ${ANDROID_SDK_MANAGER} "platforms;android-28" > /dev/null && \
+    ${ANDROID_SDK_MANAGER} "platforms;android-29" > /dev/null && \
     ${ANDROID_SDK_MANAGER} "build-tools;${ANDROID_SDK_BUILD_TOOLS_VERSION}" > /dev/null && \
     ${ANDROID_SDK_MANAGER} "extras;android;m2repository" > /dev/null && \
     chmod +x "${ANDROID_SDK_HOME}/tools/bin/avdmanager"
@@ -100,9 +100,17 @@ RUN apt -y update -qq \
     && apt -y autoremove
 
 # build dependencies
-# https://buildozer.readthedocs.io/en/latest/installation.html#android-on-ubuntu-16-04-64bit
+# install package first to overcome build dependency install error
 RUN dpkg --add-architecture i386 \
     && apt -y update -qq \
+    && apt -y install -qq --no-install-recommends -o APT::Immediate-Configure=false \
+        libstdc++6:i386\
+    && apt -y autoremove \
+    && apt -y clean
+
+# build dependencies
+# https://buildozer.readthedocs.io/en/latest/installation.html#android-on-ubuntu-16-04-64bit
+RUN apt -y update -qq \
     && apt -y install -qq --no-install-recommends \
         build-essential ccache git python3 python3-dev \
         libncurses5:i386 libstdc++6:i386 libgtk2.0-0:i386 \

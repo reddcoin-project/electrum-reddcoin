@@ -73,7 +73,7 @@ fullscreen = False
 android.permissions = INTERNET, CAMERA, WRITE_EXTERNAL_STORAGE
 
 # (int) Android API to use
-android.api = 28
+android.api = 29
 
 # (int) Minimum API required. You will need to set the android.ndk_api to be as low as this value.
 android.minapi = 21
