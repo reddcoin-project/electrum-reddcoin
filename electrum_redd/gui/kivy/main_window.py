@@ -202,7 +202,14 @@ class ElectrumWindow(App):
         self.send_screen.set_ln_invoice(invoice)
 
     def on_new_intent(self, intent):
+        if platform != 'android':
+            return
+        from jnius import autoclass
+        Intent = autoclass('android.content.Intent')
         data = str(intent.getDataString())
+        type = str(intent.getType())
+        extra = str(intent.getStringExtra(Intent.EXTRA_TEXT))
+        Logger.info(f"INTENT RECEIVED: {str(intent.getAction())} SCHEME: {str(intent.getScheme())} DATA: {data} TYPE: {type} EXTRA: {extra}")
         if str(intent.getScheme()).lower() in ('reddcoin', 'lightning'):
             self._process_invoice_str(data)
 
