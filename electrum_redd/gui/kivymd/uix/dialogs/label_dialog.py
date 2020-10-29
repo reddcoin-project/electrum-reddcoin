@@ -1,4 +1,4 @@
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.factory import Factory
 from kivy.properties import ObjectProperty
 from kivy.lang import Builder
@@ -21,8 +21,8 @@ Builder.load_string('''
             pos_hint: {'center_y':.5}
             text:''
             multiline: False
-            background_normal: 'atlas://electrum_redd/gui/kivy/theming/light/tab_btn'
-            background_active: 'atlas://electrum_redd/gui/kivy/theming/light/textinput_active'
+            background_normal: 'atlas://electrum_redd/gui/kivymd/theming/light/tab_btn'
+            background_active: 'atlas://electrum_redd/gui/kivymd/theming/light/textinput_active'
             hint_text_color: self.foreground_color
             foreground_color: 1, 1, 1, 1
             font_size: '16dp'

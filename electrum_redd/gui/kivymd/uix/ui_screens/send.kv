@@ -84,7 +84,7 @@
                 height: blue_bottom.item_height
                 spacing: '5dp'
                 Image:
-                    source: 'atlas://electrum_redd/gui/kivy/theming/light/lightning' if root.is_lightning else 'atlas://electrum_redd/gui/kivy/theming/light/globe'
+                    source: 'atlas://electrum_redd/gui/kivymd/theming/light/lightning' if root.is_lightning else 'atlas://electrum_redd/gui/kivymd/theming/light/globe'
                     size_hint: None, None
                     size: '22dp', '22dp'
                     pos_hint: {'center_y': .5}
@@ -101,7 +101,7 @@
                 height: blue_bottom.item_height
                 spacing: '5dp'
                 Image:
-                    source: 'atlas://electrum_redd/gui/kivy/theming/light/calculator'
+                    source: 'atlas://electrum_redd/gui/kivymd/theming/light/calculator'
                     opacity: 0.7
                     size_hint: None, None
                     size: '22dp', '22dp'
@@ -120,7 +120,7 @@
                 height: blue_bottom.item_height
                 spacing: '5dp'
                 Image:
-                    source: 'atlas://electrum_redd/gui/kivy/theming/light/pen'
+                    source: 'atlas://electrum_redd/gui/kivymd/theming/light/pen'
                     size_hint: None, None
                     size: '22dp', '22dp'
                     pos_hint: {'center_y': .5}
@@ -136,7 +136,7 @@
                 height: blue_bottom.item_height
                 spacing: '5dp'
                 Image:
-                    source: 'atlas://electrum_redd/gui/kivy/theming/light/star_big_inactive'
+                    source: 'atlas://electrum_redd/gui/kivymd/theming/light/star_big_inactive'
                     size_hint: None, None
                     size: '22dp', '22dp'
                     pos_hint: {'center_y': .5}
@@ -149,20 +149,20 @@
             size_hint: 1, None
             height: '48dp'
             IconButton:
-                icon: 'atlas://electrum_redd/gui/kivy/theming/light/delete'
+                icon: 'atlas://electrum_redd/gui/kivymd/theming/light/delete'
                 size_hint: 0.5, 1
                 on_release: Clock.schedule_once(lambda dt: s.clear_invoices_dialog())
             IconButton:
                 size_hint: 0.5, 1
                 on_release: s.do_save()
-                icon: 'atlas://electrum_redd/gui/kivy/theming/light/save'
+                icon: 'atlas://electrum_redd/gui/kivymd/theming/light/save'
             IconButton:
                 size_hint: 0.5, 1
                 on_release: s.do_clear()
-                icon: 'atlas://electrum_redd/gui/kivy/theming/light/closebutton'
+                icon: 'atlas://electrum_redd/gui/kivymd/theming/light/closebutton'
             IconButton:
                 size_hint: 0.5, 1
-                icon: 'atlas://electrum_redd/gui/kivy/theming/light/copy'
+                icon: 'atlas://electrum_redd/gui/kivymd/theming/light/copy'
                 on_release: s.do_paste()
             Button:
                 id: qr

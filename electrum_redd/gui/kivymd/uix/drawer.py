@@ -5,7 +5,7 @@ and visible in Tablet Mode.
 This class is specifically in lined to save on start up speed(minimize i/o).
 '''
 
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.factory import Factory
 from kivy.properties import OptionProperty, NumericProperty, ObjectProperty
 from kivy.clock import Clock

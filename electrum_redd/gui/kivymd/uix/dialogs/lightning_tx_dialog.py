@@ -3,7 +3,7 @@ from datetime import datetime
 from decimal import Decimal
 from typing import NamedTuple, Callable, TYPE_CHECKING
 
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.factory import Factory
 from kivy.properties import ObjectProperty
 from kivy.lang import Builder

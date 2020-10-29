@@ -35,7 +35,7 @@ Builder.load_string('''
                 size_hint: 1, None
                 height: blue_bottom.item_height
                 Image:
-                    source: 'atlas://electrum_redd/gui/kivy/theming/light/globe'
+                    source: 'atlas://electrum_redd/gui/kivymd/theming/light/globe'
                     size_hint: None, None
                     size: '22dp', '22dp'
                     pos_hint: {'center_y': .5}
@@ -48,7 +48,7 @@ Builder.load_string('''
                 size_hint: 1, None
                 height: blue_bottom.item_height
                 Image:
-                    source: 'atlas://electrum_redd/gui/kivy/theming/light/calculator'
+                    source: 'atlas://electrum_redd/gui/kivymd/theming/light/calculator'
                     size_hint: None, None
                     size: '22dp', '22dp'
                     pos_hint: {'center_y': .5}
@@ -61,12 +61,12 @@ Builder.load_string('''
             size_hint: 1, None
             height: '48dp'
             IconButton:
-                icon: 'atlas://electrum_redd/gui/kivy/theming/light/copy'
+                icon: 'atlas://electrum_redd/gui/kivymd/theming/light/copy'
                 size_hint: 0.5, None
                 height: '48dp'
                 on_release: s.do_paste()
             IconButton:
-                icon: 'atlas://electrum_redd/gui/kivy/theming/light/camera'
+                icon: 'atlas://electrum_redd/gui/kivymd/theming/light/camera'
                 size_hint: 0.5, None
                 height: '48dp'
                 on_release: app.scan_qr(on_complete=s.on_qr)

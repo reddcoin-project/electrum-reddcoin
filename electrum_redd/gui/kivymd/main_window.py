@@ -23,7 +23,7 @@ from electrum_redd.network import Network, TxBroadcastError, BestEffortRequestFa
 from electrum_redd.interface import PREFERRED_NETWORK_PROTOCOL, ServerAddr
 from .i18n import _
 
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.core.window import Window
 from kivy.logger import Logger
 from kivy.utils import platform
@@ -87,7 +87,7 @@ if TYPE_CHECKING:
     from electrum_redd.paymentrequest import PaymentRequest
 
 
-class ElectrumWindow(App):
+class ElectrumWindow(MDApp):
 
     electrum_config = ObjectProperty(None)
     language = StringProperty('en')
@@ -375,7 +375,7 @@ class ElectrumWindow(App):
         self.asyncio_loop = asyncio.get_event_loop()
         self.password = None
 
-        App.__init__(self)#, **kwargs)
+        MDApp.__init__(self)#, **kwargs)
 
         self.electrum_config = config = kwargs.get('config', None)  # type: SimpleConfig
         self.language = config.get('language', 'en')
@@ -549,7 +549,7 @@ class ElectrumWindow(App):
         currentActivity.startActivity(it)
 
     def build(self):
-        return Builder.load_file('electrum_redd/gui/kivy/main.kv')
+        return Builder.load_file('electrum_redd/gui/kivymd/main.kv')
 
     def _pause(self):
         if platform == 'android':
@@ -1027,7 +1027,7 @@ class ElectrumWindow(App):
         self.qr_dialog(label.name, label.data, True)
 
     def show_error(self, error, width='200dp', pos=None, arrow_pos=None,
-                   exit=False, icon='atlas://electrum_redd/gui/kivy/theming/light/error', duration=0,
+                   exit=False, icon='atlas://electrum_redd/gui/kivymd/theming/light/error', duration=0,
                    modal=False):
         ''' Show an error Message Bubble.
         '''
@@ -1039,7 +1039,7 @@ class ElectrumWindow(App):
                   exit=False, duration=0, modal=False):
         ''' Show an Info Message Bubble.
         '''
-        self.show_error(error, icon='atlas://electrum_redd/gui/kivy/theming/light/important',
+        self.show_error(error, icon='atlas://electrum_redd/gui/kivymd/theming/light/important',
             duration=duration, modal=modal, exit=exit, pos=pos,
             arrow_pos=arrow_pos)
 
@@ -1080,7 +1080,7 @@ class ElectrumWindow(App):
             info_bubble.show_arrow = False
             img.allow_stretch = True
             info_bubble.dim_background = True
-            info_bubble.background_image = 'atlas://electrum_redd/gui/kivy/theming/light/card'
+            info_bubble.background_image = 'atlas://electrum_redd/gui/kivymd/theming/light/card'
         else:
             info_bubble.fs = False
             info_bubble.icon = icon

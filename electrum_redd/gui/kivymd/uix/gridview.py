@@ -183,7 +183,7 @@ class HorizVertGrid(GridView):
 
 
 if __name__ == "__main__":
-    from kivy.app import App
+    from kivymd.app import MDApp
     class MainApp(App):
 
         def build(self):

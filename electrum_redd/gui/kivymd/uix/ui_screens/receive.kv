@@ -85,7 +85,7 @@
                 height: blue_bottom.item_height
                 spacing: '5dp'
                 Image:
-                    source: 'atlas://electrum_redd/gui/kivy/theming/light/lightning' if root.is_lightning else 'atlas://electrum_redd/gui/kivy/theming/light/globe'
+                    source: 'atlas://electrum_redd/gui/kivymd/theming/light/lightning' if root.is_lightning else 'atlas://electrum_redd/gui/kivymd/theming/light/globe'
                     size_hint: None, None
                     size: '22dp', '22dp'
                     pos_hint: {'center_y': .5}
@@ -102,7 +102,7 @@
                 height: blue_bottom.item_height
                 spacing: '5dp'
                 Image:
-                    source: 'atlas://electrum_redd/gui/kivy/theming/light/calculator'
+                    source: 'atlas://electrum_redd/gui/kivymd/theming/light/calculator'
                     opacity: 0.7
                     size_hint: None, None
                     size: '22dp', '22dp'
@@ -122,7 +122,7 @@
                 height: blue_bottom.item_height
                 spacing: '5dp'
                 Image:
-                    source: 'atlas://electrum_redd/gui/kivy/theming/light/pen'
+                    source: 'atlas://electrum_redd/gui/kivymd/theming/light/pen'
                     size_hint: None, None
                     size: '22dp', '22dp'
                     pos_hint: {'center_y': .5}
@@ -134,12 +134,12 @@
             size_hint: 1, None
             height: '48dp'
             IconButton:
-                icon: 'atlas://electrum_redd/gui/kivy/theming/light/delete'
+                icon: 'atlas://electrum_redd/gui/kivymd/theming/light/delete'
                 size_hint: 0.5, None
                 height: '48dp'
                 on_release: Clock.schedule_once(lambda dt: s.clear_requests_dialog())
             IconButton:
-                icon: 'atlas://electrum_redd/gui/kivy/theming/light/clock1'
+                icon: 'atlas://electrum_redd/gui/kivymd/theming/light/clock1'
                 size_hint: 0.5, None
                 height: '48dp'
                 on_release: Clock.schedule_once(lambda dt: s.expiration_dialog(s))

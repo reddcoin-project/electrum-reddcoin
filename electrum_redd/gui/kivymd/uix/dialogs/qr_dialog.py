@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.core.clipboard import Clipboard
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.clock import Clock
 
 from electrum_redd.gui.kivy.i18n import _
@@ -47,7 +47,7 @@ Builder.load_string('''
                     on_release:
                         root.copy_to_clipboard()
                 IconButton:
-                    icon: 'atlas://electrum_redd/gui/kivy/theming/light/share'
+                    icon: 'atlas://electrum_redd/gui/kivymd/theming/light/share'
                     size_hint: 0.6, None
                     height: '48dp'
                     on_release: root.do_share()
@@ -63,7 +63,7 @@ class QRDialog(Factory.Popup):
     def __init__(self, title, data, show_text, *,
                  failure_cb=None, text_for_clipboard=None, help_text=None):
         Factory.Popup.__init__(self)
-        self.app = App.get_running_app()  # type: ElectrumWindow
+        self.app = MDApp.get_running_app()  # type: ElectrumWindow
         self.title = title
         self.data = data
         self.help_text = (data if show_text else help_text) or ''

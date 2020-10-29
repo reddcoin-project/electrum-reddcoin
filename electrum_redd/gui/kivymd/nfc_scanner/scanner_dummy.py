@@ -3,7 +3,7 @@
 from . import NFCBase
 from kivy.clock import Clock
 from kivy.logger import Logger
-from kivy.app import App
+from kivymd.app import MDApp
 
 class ScannerDummy(NFCBase):
     '''This is the dummy interface that gets selected in case any other
@@ -28,7 +28,7 @@ class ScannerDummy(NFCBase):
                     'extra details': None}
 
         # let Main app know that a tag has been detected
-        app = App.get_running_app()
+        app = MDApp.get_running_app()
         app.tag_discovered(tag_info)
         app.show_info('New tag detected.', duration=2)
         Logger.debug('NFC: got new dummy tag')

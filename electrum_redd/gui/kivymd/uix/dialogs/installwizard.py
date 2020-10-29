@@ -4,7 +4,7 @@ import threading
 import os
 from typing import TYPE_CHECKING
 
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty, StringProperty, OptionProperty
@@ -43,8 +43,8 @@ Builder.load_string('''
     background_color: (1, 1, 1, 1) if self.focus else (0.454, 0.698, 0.909, 1)
     foreground_color: (0.31, 0.31, 0.31, 1) if self.focus else (0.835, 0.909, 0.972, 1)
     hint_text_color: self.foreground_color
-    background_active: 'atlas://electrum_redd/gui/kivy/theming/light/create_act_text_active'
-    background_normal: 'atlas://electrum_redd/gui/kivy/theming/light/create_act_text_active'
+    background_active: 'atlas://electrum_redd/gui/kivymd/theming/light/create_act_text_active'
+    background_normal: 'atlas://electrum_redd/gui/kivymd/theming/light/create_act_text_active'
     size_hint_y: None
     height: '48sp'
 
@@ -314,7 +314,7 @@ Builder.load_string('''
     font_size: '18dp'
     text_size: self.width - dp(24), self.height - dp(12)
     color: .1, .1, .1, 1
-    background_normal: 'atlas://electrum_redd/gui/kivy/theming/light/white_bg_round_top'
+    background_normal: 'atlas://electrum_redd/gui/kivymd/theming/light/white_bg_round_top'
     background_down: self.background_normal
     size_hint_y: None
 
@@ -343,7 +343,7 @@ Builder.load_string('''
         height: '30dp'
         width: '30dp'
         size_hint: 1, None
-        icon: 'atlas://electrum_redd/gui/kivy/theming/light/gear'
+        icon: 'atlas://electrum_redd/gui/kivymd/theming/light/gear'
         on_release:
             root.options_dialog() if root.options_dialog else None
 
@@ -479,7 +479,7 @@ Builder.load_string('''
             id: scan
             height: '48sp'
             on_release: root.scan_xpub()
-            icon: 'atlas://electrum_redd/gui/kivy/theming/light/camera'
+            icon: 'atlas://electrum_redd/gui/kivymd/theming/light/camera'
             size_hint: 1, None
         WizardButton:
             text: _('Paste')
@@ -587,7 +587,7 @@ class WizardDialog(EventsDialog):
         super(WizardDialog, self).__init__()
         self.wizard = wizard
         self.ids.back.disabled = not wizard.can_go_back()
-        self.app = App.get_running_app()
+        self.app = MDApp.get_running_app()
         self.run_next = kwargs['run_next']
 
         self._trigger_size_dialog = Clock.create_trigger(self._size_dialog, -1)
@@ -600,7 +600,7 @@ class WizardDialog(EventsDialog):
         self._on_release = False
 
     def _size_dialog(self, dt):
-        app = App.get_running_app()
+        app = MDApp.get_running_app()
         if app.ui_mode[0] == 'p':
             self.size = Window.size
         else:
@@ -622,7 +622,7 @@ class WizardDialog(EventsDialog):
             if self.wizard.can_go_back():
                 self.wizard.go_back()
             else:
-                app = App.get_running_app()
+                app = MDApp.get_running_app()
                 if not app.is_exit:
                     app.is_exit = True
                     app.show_info(_('Press again to exit'))
@@ -635,7 +635,7 @@ class WizardDialog(EventsDialog):
         Window.unbind(size=self._trigger_size_dialog,
                       rotation=self._trigger_size_dialog,
                       on_keyboard=self.on_keyboard)
-        app = App.get_running_app()
+        app = MDApp.get_running_app()
         if app.wallet is None and not self._on_release:
             app.stop()
 
@@ -750,7 +750,7 @@ class WizardConfirmDialog(WizardDialog):
 
     def on_parent(self, instance, value):
         if value:
-            app = App.get_running_app()
+            app = MDApp.get_running_app()
             self._back = _back = partial(app.dispatch, 'on_back')
 
     def get_params(self, button):
@@ -778,7 +778,7 @@ class WizardChoiceDialog(WizardDialog):
 
     def on_parent(self, instance, value):
         if value:
-            app = App.get_running_app()
+            app = MDApp.get_running_app()
             self._back = _back = partial(app.dispatch, 'on_back')
 
     def get_params(self, button):
@@ -845,7 +845,7 @@ class ShowSeedDialog(WizardDialog):
 
     def on_parent(self, instance, value):
         if value:
-            app = App.get_running_app()
+            app = MDApp.get_running_app()
             self._back = _back = partial(self.ids.back.dispatch, 'on_release')
 
     def options_dialog(self):
@@ -963,7 +963,7 @@ class RestoreSeedDialog(WizardDialog):
             #tis._keyboard.bind(on_key_down=self.on_key_down)
             self._back = _back = partial(self.ids.back.dispatch,
                                          'on_release')
-            app = App.get_running_app()
+            app = MDApp.get_running_app()
 
     def on_key_down(self, keyboard, keycode, key, modifiers):
         if keycode[0] in (13, 271):
@@ -1092,9 +1092,9 @@ class InstallWizard(BaseWizard, Widget):
                         self.show_error(str(e))
                 Clock.schedule_once(lambda dt: protected_on_finished(), -1)
 
-        app = App.get_running_app()
+        app = MDApp.get_running_app()
         app.show_info_bubble(
-            text=msg, icon='atlas://electrum_redd/gui/kivy/theming/light/important',
+            text=msg, icon='atlas://electrum_redd/gui/kivymd/theming/light/important',
             pos=Window.center, width='200sp', arrow_pos=None, modal=True)
         t = threading.Thread(target = target)
         t.start()
@@ -1154,7 +1154,7 @@ class InstallWizard(BaseWizard, Widget):
     def show_message(self, msg): self.show_error(msg)
 
     def show_error(self, msg):
-        app = App.get_running_app()  # type: ElectrumWindow
+        app = MDApp.get_running_app()  # type: ElectrumWindow
         Clock.schedule_once(lambda dt: app.show_error(msg))
 
     def request_password(self, run_next, force_disable_encrypt_cb=False):
@@ -1168,7 +1168,7 @@ class InstallWizard(BaseWizard, Widget):
         def on_failure():
             self.show_error(_('Password mismatch'))
             self.run('request_password', run_next)
-        app = App.get_running_app()
+        app = MDApp.get_running_app()
         popup = PasswordDialog(
             app,
             check_password=lambda x:True,

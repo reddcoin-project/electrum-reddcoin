@@ -1,4 +1,4 @@
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.factory import Factory
 from kivy.properties import ObjectProperty, BooleanProperty
 from kivy.lang import Builder

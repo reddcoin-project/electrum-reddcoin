@@ -1,4 +1,4 @@
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.factory import Factory
 from kivy.lang import Builder
 
@@ -33,7 +33,7 @@ Builder.load_string('''
     #separator_color: .89, .89, .89, 1
     #separator_height: '1.2dp'
     #title_color: .437, .437, .437, 1
-    #background: 'atlas://electrum_redd/gui/kivy/theming/light/dialog'
+    #background: 'atlas://electrum_redd/gui/kivymd/theming/light/dialog'
     on_activate:
         qrscr.start()
         qrscr.size = self.size

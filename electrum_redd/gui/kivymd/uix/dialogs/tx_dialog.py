@@ -2,7 +2,7 @@ import copy
 from datetime import datetime
 from typing import NamedTuple, Callable, TYPE_CHECKING
 
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.factory import Factory
 from kivy.properties import ObjectProperty
 from kivy.lang import Builder
@@ -102,7 +102,7 @@ Builder.load_string('''
             IconButton:
                 size_hint: 0.5, None
                 height: '48dp'
-                icon: 'atlas://electrum_redd/gui/kivy/theming/light/qrcode'
+                icon: 'atlas://electrum_redd/gui/kivymd/theming/light/qrcode'
                 on_release: root.show_qr()
             Button:
                 size_hint: 0.5, None

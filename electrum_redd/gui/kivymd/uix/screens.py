@@ -6,7 +6,7 @@ import threading
 import traceback, sys
 from typing import TYPE_CHECKING, List, Optional, Dict, Any
 
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.cache import Cache
 from kivy.clock import Clock
 from kivy.compat import string_types
@@ -60,7 +60,7 @@ class CScreen(Factory.Screen):
     __events__ = ('on_activate', 'on_deactivate', 'on_enter', 'on_leave')
     action_view = ObjectProperty(None)
     kvname = None
-    app = App.get_running_app()  # type: ElectrumWindow
+    app = MDApp.get_running_app()  # type: ElectrumWindow
 
     def on_enter(self):
         # FIXME: use a proper event don't use animation time of screen
@@ -132,7 +132,7 @@ class HistoryScreen(CScreen):
         if is_lightning:
             status = 0
             status_str = 'unconfirmed' if timestamp is None else format_time(int(timestamp))
-            icon = "atlas://electrum_redd/gui/kivy/theming/light/lightning"
+            icon = "atlas://electrum_redd/gui/kivymd/theming/light/lightning"
             message = tx_item['label']
             fee_msat = tx_item['fee_msat']
             fee = int(fee_msat/1000) if fee_msat else None
@@ -144,7 +144,7 @@ class HistoryScreen(CScreen):
                                         conf=tx_item['confirmations'],
                                         timestamp=tx_item['timestamp'])
             status, status_str = self.app.wallet.get_tx_status(tx_hash, tx_mined_info)
-            icon = "atlas://electrum_redd/gui/kivy/theming/light/" + TX_ICONS[status]
+            icon = "atlas://electrum_redd/gui/kivymd/theming/light/" + TX_ICONS[status]
             message = tx_item['label'] or tx_hash
             fee = tx_item['fee_sat']
             fee_text = '' if fee is None else 'fee: %d sat'%fee

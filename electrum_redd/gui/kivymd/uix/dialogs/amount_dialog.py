@@ -1,4 +1,4 @@
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.factory import Factory
 from kivy.properties import ObjectProperty
 from kivy.lang import Builder
@@ -120,7 +120,7 @@ from kivy.properties import BooleanProperty
 
 class AmountDialog(Factory.Popup):
     show_max = BooleanProperty(False)
-    app = App.get_running_app()
+    app = MDApp.get_running_app()
 
     def __init__(self, show_max, amount, cb):
         Factory.Popup.__init__(self)

@@ -2,7 +2,7 @@
 built in NFC adapter of some android phones.
 '''
 
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.clock import Clock
 #Detect which platform we are on
 from kivy.utils import platform
@@ -44,7 +44,7 @@ class ScannerAndroid(NFCBase):
         '''
         # Initialize NFC
         global app
-        app = App.get_running_app()
+        app = MDApp.get_running_app()
 
         # Make sure we are listening to new intent 
         activity.bind(on_new_intent=self.on_new_intent)

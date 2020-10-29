@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Sequence
 
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.clock import Clock
 from kivy.factory import Factory
 from kivy.properties import NumericProperty, StringProperty, BooleanProperty
@@ -184,11 +184,11 @@ class InfoBubble(Factory.Bubble):
                 Window.remove_widget(m)
             Window.remove_widget(self)
             if self.exit:
-                App.get_running_app().stop()
+                MDApp.get_running_app().stop()
                 import sys
                 sys.exit()
             else:
-                App.get_running_app().is_exit = False
+                MDApp.get_running_app().is_exit = False
 
         if now:
             return on_stop()
@@ -207,7 +207,7 @@ class OutputList(RecycleView):
 
     def __init__(self, **kwargs):
         super(OutputList, self).__init__(**kwargs)
-        self.app = App.get_running_app()  # type: ElectrumWindow
+        self.app = MDApp.get_running_app()  # type: ElectrumWindow
 
     def update(self, outputs: Sequence['TxOutput']):
         res = []
