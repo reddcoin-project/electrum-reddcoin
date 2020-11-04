@@ -20,11 +20,11 @@ from electrum_redd.network import Network
 
 
 class UpdateCheck(QDialog, Logger):
-    url = "https://reddcoin.com/version"
-    download_url = "https://reddcoin.com/#download"
+    url = "https://download.reddcoin.com/version"
+    download_url = "https://download.reddcoin.com/bin/electrum/"
 
     VERSION_ANNOUNCEMENT_SIGNING_KEYS = (
-        "13xjmVAB1EATPP8RshTE8S8sNwwSUM9p1P",
+        "RbEQgzRiFL6SjmEqyq8fH1EBVRdpAW2j5r",
     )
 
     def __init__(self, *, latest_version=None):
@@ -83,7 +83,7 @@ class UpdateCheck(QDialog, Logger):
             self.latest_version_label.setText(_("Latest version: {}".format(latest_version)))
             if self.is_newer(latest_version):
                 self.heading_label.setText('<h2>' + _("There is a new update available") + '</h2>')
-                url = "<a href='{u}'>{u}</a>".format(u=UpdateCheck.download_url)
+                url = "<a href='{u}{v}'>{u}{v}</a>".format(u=UpdateCheck.download_url, v=latest_version)
                 self.detail_label.setText(_("You can download the new version from {}.").format(url))
             else:
                 self.heading_label.setText('<h2>' + _("Already up to date") + '</h2>')
@@ -112,11 +112,11 @@ class UpdateCheckThread(QThread, Logger):
                 # {
                 #     "version": "3.9.9",
                 #     "signatures": {
-                #         "1Lqm1HphuhxKZQEawzPse8gJtgjm9kUKT4": "IA+2QG3xPRn4HAIFdpu9eeaCYC7S5wS/sDxn54LJx6BdUTBpse3ibtfq8C43M7M1VfpGkD5tsdwl5C6IfpZD/gQ="
+                #         "RheZ6cHLTUwi18a3JMn6wU2KUxy4jg943F": "IFX1C4Ejm0CUprbctWTn4yKPC1rVgcXiEtLwFtiWYFXUJ6xDgZnTlX/L8wXz/VyoHjyusA9gNnQK/FDQQQ/z+Gs="
                 #     }
                 # }
-                version_num = signed_version_dict['version']
-                sigs = signed_version_dict['signatures']
+                version_num = signed_version_dict['electrum']['version']
+                sigs = signed_version_dict['electrum']['signatures']
                 for address, sig in sigs.items():
                     if address not in UpdateCheck.VERSION_ANNOUNCEMENT_SIGNING_KEYS:
                         continue
