@@ -41,7 +41,7 @@ ENV ANDROID_SDK_HOME="${ANDROID_HOME}/android-sdk"
 
 # get the latest version from https://developer.android.com/studio/index.html
 ENV ANDROID_SDK_TOOLS_VERSION="6514223"
-ENV ANDROID_SDK_BUILD_TOOLS_VERSION="29.0.3"
+ENV ANDROID_SDK_BUILD_TOOLS_VERSION="30.0.2"
 ENV ANDROID_SDK_TOOLS_ARCHIVE="commandlinetools-linux-${ANDROID_SDK_TOOLS_VERSION}_latest.zip"
 ENV ANDROID_SDK_TOOLS_DL_URL="https://dl.google.com/android/repository/${ANDROID_SDK_TOOLS_ARCHIVE}"
 ENV ANDROID_SDK_MANAGER="${ANDROID_SDK_HOME}/tools/bin/sdkmanager --sdk_root=${ANDROID_SDK_HOME}"
