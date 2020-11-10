@@ -1,4 +1,13 @@
-# Release 4.0.3 - (Sep 11, 2020)
+# Release 4.0.3 - (Oct 28, 2020)
+ * Implement Reddcoin
+   _ Update branding
+   - Implement headers download
+   - implement KGW
+   - add excahnges supporting reddcoin
+ * Android
+   - Add intent logging into android
+   - Add support for Android10
+   - Add support for x86 and x86_64
  * PSBT: restore compatibility with Bitcoin Core following CVE-2020-14199:
    we now allow a PSBT input to have both UTXO and WITNESS_UTXO (#6429).
    (PSBTs created since 4.0.1 already contained UTXO for segwit inputs)
