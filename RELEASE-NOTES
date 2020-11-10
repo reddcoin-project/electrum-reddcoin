@@ -1,3 +1,17 @@
+# Release 4.0.4 - (Nov XX, 2020)
+ * Android binary
+   - update build tools 30.0.2
+ * PSBT: fix regression in 4.0.3 where UTXO data was not included in
+   QR codes (#6600)
+ * new feature: "Cancel tx" (#6641). The Qt/kivy GUI allows cancelling
+   an unconfirmed RBF tx by double-spending its inputs to self.
+ * Windows binary:
+   - fix some issues with QR scanning by building zbar ourselves (#6593)
+   - when using setup exe, also install a debug binary (#6603)
+ * Ledger: fix "The derivation path is unusual" warnings (#6512)
+   (needs Bitcoin app 1.4.8+ installed on device)
+ * A few other minor bugfixes and usability improvements.
+
 # Release 4.0.3 - (Oct 28, 2020)
  * Implement Reddcoin
    _ Update branding

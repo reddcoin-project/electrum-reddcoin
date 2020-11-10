@@ -257,7 +257,7 @@ class ElectrumWindow(App):
     def on_fee_histogram(self, *args):
         self._trigger_update_history()
 
-    def on_request_status(self, event, key, status):
+    def on_request_status(self, event, wallet, key, status):
         if key not in self.wallet.receive_requests:
             return
         self.update_tab('receive')
@@ -267,7 +267,7 @@ class ElectrumWindow(App):
             self.show_info(_('Payment Received') + '\n' + key)
             self._trigger_update_history()
 
-    def on_invoice_status(self, event, key):
+    def on_invoice_status(self, event, wallet, key):
         req = self.wallet.get_invoice(key)
         if req is None:
             return
