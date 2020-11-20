@@ -897,7 +897,8 @@ class ElectrumWindow(App):
             status = _("Offline")
             if self.network.is_header_downloading():
                 self.percent_dl = self.network.is_header_downloading_pc()
-                status = _("Downloading Headers {:.2f}%").format(self.percent_dl)
+                status = ("[size=18dp]{} \n    {:.2f}%[/size]"
+                          .format(_("Downloading Headers..."), self.percent_dl))
             self.percent_dl = self.network.is_header_downloading_pc()
         elif self.network.is_connected():
             self.num_blocks = self.network.get_local_height()
