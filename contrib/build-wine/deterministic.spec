@@ -158,7 +158,7 @@ exe_inside_setup_console = EXE(
     debug=False,
     strip=None,
     upx=False,
-    icon=home+'electrum/gui/icons/electrum.ico',
+    icon=home+'electrum_redd/gui/icons/electrum.ico',
     console=True)
 
 coll = COLLECT(
