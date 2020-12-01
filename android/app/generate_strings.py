@@ -91,7 +91,7 @@ def read_catalog(filename, lang, region):
             nplurals = int(match.group(1))
 
             try:
-                locale = babel.Locale("{}_{}".format(lang, region))
+                locale = babel.Locale.parse("{}_{}".format(lang, region))
             except babel.UnknownLocaleError:
                 locale = babel.Locale(lang)
 
