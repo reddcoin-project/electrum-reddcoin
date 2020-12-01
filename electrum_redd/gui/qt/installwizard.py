@@ -705,7 +705,7 @@ class InstallWizard(QDialog, MessageBoxMixin, BaseWizard):
                   "hardware. In most cases you simply want to let Electrum "
                   "pick one at random.  However if you prefer feel free to "
                   "select a server manually.")
-        choices = [_("Auto connect"), _("Select server manually")]
+        choices = [_("Auto-connect"), _("Select server manually")]
         title = _("How do you want to connect to a server? ")
         clayout = ChoicesLayout(message, choices)
         self.back_button.setText(_('Cancel'))

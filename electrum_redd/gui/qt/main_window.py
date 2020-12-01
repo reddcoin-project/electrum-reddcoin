@@ -532,7 +532,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, Logger):
                                         self.wallet.basename())
         extra = [self.wallet.db.get('wallet_type', '?')]
         if self.wallet.is_watching_only():
-            extra.append(_('watching only'))
+            extra.append(_('watching-only'))
         title += '  [%s]'% ', '.join(extra)
         self.setWindowTitle(title)
         self.password_menu.setEnabled(self.wallet.may_have_password())
@@ -2720,7 +2720,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, Logger):
             self.show_transaction(tx)
 
     def do_process_from_text_channel_backup(self):
-        text = text_dialog(self, _('Input channel backup'), _("Channel Backup:"), _("Load backup"))
+        text = text_dialog(self, _('Input channel backup'), _("Channel Backup: "), _("Load backup"))
         if not text:
             return
         if text.startswith('channel_backup:'):
