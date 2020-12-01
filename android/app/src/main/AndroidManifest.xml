@@ -58,7 +58,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="org.electroncash.wallet.wallet_exports"
+            android:authorities="org.electrum_redd.wallet.wallet_exports"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

@@ -627,7 +627,7 @@ class WalletExportDialog : AlertDialogFragment() {
                 val exportFilePath = "$exportDir/$exportFileName"
                 val exportFile = File(exportFilePath)
                 val exportFileUri: Uri = FileProvider.getUriForFile(activity!!,
-                        "org.electroncash.wallet.wallet_exports", exportFile)
+                        "org.electrum_redd.wallet.wallet_exports", exportFile)
                 daemonModel.commands.callAttr("copy_wallet", walletName, exportFilePath)
                 val sendIntent = Intent()
                 sendIntent.type = "application/octet-stream"

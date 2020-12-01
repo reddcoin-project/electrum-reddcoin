@@ -16,7 +16,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "org.electroncash.wallet"
+        applicationId "org.electrum_redd.wallet"
         minSdkVersion 16
         targetSdkVersion 29
 
