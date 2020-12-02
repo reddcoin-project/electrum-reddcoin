@@ -1,4 +1,4 @@
-package org.electroncash.electroncash3
+package org.electrum_redd.electrum_redd2
 
 import androidx.fragment.app.Fragment
 import android.widget.ImageView

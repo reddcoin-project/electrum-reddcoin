@@ -1,4 +1,4 @@
-package org.electroncash.electroncash3
+package org.electrum_redd.electrum_redd2
 
 import androidx.lifecycle.MutableLiveData
 import android.widget.Toast
@@ -53,7 +53,7 @@ class DaemonModel {
         watchdog.run()
     }
 
-    // This function is called from src/main/python/electroncash_gui/android/daemon.py.
+    // This function is called from src/main/python/electrum_redd/gui/android/daemon.py.
     // It will sometimes be called on the main thread and sometimes on the network thread.
     @Suppress("unused")
     fun onCallback(event: String) {

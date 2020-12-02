@@ -1,4 +1,4 @@
-package org.electroncash.electroncash3
+package org.electrum_redd.electrum_redd2
 
 import android.os.Build
 import android.os.Handler

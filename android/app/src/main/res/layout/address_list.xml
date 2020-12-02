@@ -5,10 +5,10 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="org.electroncash.electroncash3.UtilKt"/>
+        <import type="org.electrum_redd.electrum_redd2.UtilKt"/>
         <variable
             name="model"
-            type="org.electroncash.electroncash3.AddressModel"/>
+            type="org.electrum_redd.electrum_redd2.AddressModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

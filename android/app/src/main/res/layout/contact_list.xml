@@ -6,7 +6,7 @@
     <data>
         <variable
             name="model"
-            type="org.electroncash.electroncash3.ContactModel"/>
+            type="org.electrum_redd.electrum_redd2.ContactModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
