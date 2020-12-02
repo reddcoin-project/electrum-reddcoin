@@ -46,7 +46,7 @@ import itertools
 
 from aiorpcx import TaskGroup
 
-from .i18n import _
+from .i18n import _, ngettext
 from .bip32 import BIP32Node, convert_bip32_intpath_to_strpath, convert_bip32_path_to_list_of_uint32
 from .crypto import sha256
 from . import util
@@ -583,9 +583,10 @@ class Abstract_Wallet(AddressSynchronizer, ABC):
         if tx.is_complete():
             if tx_we_already_have_in_db:
                 label = self.get_label_for_txid(tx_hash)
+                conf = tx_mined_status.conf
                 if tx_mined_status.height > 0:
                     if tx_mined_status.conf:
-                        status = _("{} confirmations").format(tx_mined_status.conf)
+                        status = ngettext("{conf} confirmation", "{conf} confirmations", conf).format(conf=conf)
                     else:
                         status = _('Not verified')
                 elif tx_mined_status.height in (TX_HEIGHT_UNCONF_PARENT, TX_HEIGHT_UNCONFIRMED):

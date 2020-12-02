@@ -38,6 +38,11 @@ def _(x):
     return language.gettext(x)
 
 
+def ngettext(singular: str, plural: str, n: int) -> str:
+    global language
+    return language.ngettext(singular, plural, n)
+
+
 def set_language(x):
     global language
     if x:
