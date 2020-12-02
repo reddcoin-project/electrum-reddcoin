@@ -102,7 +102,7 @@
             android:text="@{model.status}"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvBalance"
             app:layout_constraintEnd_toEndOf="@+id/tvTimestamp"
-            tools:text="@string/confirmations"/>
+            tools:text="@string/_confirmation"/>
 
         <TextView
             android:id="@+id/tvDescription"

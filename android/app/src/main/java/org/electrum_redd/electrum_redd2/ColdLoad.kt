@@ -30,7 +30,7 @@ class ColdLoadDialog : AlertDialogFragment() {
         builder.setTitle(R.string.load_transaction)
                 .setView(R.layout.load)
                 .setNegativeButton(android.R.string.cancel, null)
-                .setNeutralButton(R.string.qr_code, null)
+                .setNeutralButton(R.string.QR_Code, null)
                 .setPositiveButton(R.string.send, null)
     }
 

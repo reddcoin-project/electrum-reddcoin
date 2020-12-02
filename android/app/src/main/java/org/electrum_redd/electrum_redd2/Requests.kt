@@ -85,7 +85,7 @@ class RequestDialog() : AlertDialogFragment() {
 
     init {
         if (wallet.callAttr("is_watching_only").toBoolean()) {
-            throw ToastException(R.string.this_wallet_is)
+            throw ToastException(R.string.this_wallet_is_watching_only)
         }
     }
 

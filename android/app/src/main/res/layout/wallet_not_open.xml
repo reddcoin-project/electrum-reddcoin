@@ -15,7 +15,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
         android:gravity="center_horizontal"
-        android:text="@string/no_wallet_is_open_"
+        android:text="@string/no_wallet_is_open"
         app:layout_constraintBottom_toTopOf="@+id/textView23"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

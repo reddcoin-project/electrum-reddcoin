@@ -76,10 +76,10 @@ fun validateWalletName(name: String) {
     if (name.toByteArray().size > 200) {
         // The filesystem limit is probably 255, but we need to leave room for the temporary
         // filename suffix.
-        throw ToastException(R.string.wallet_name_is_too)
+        throw ToastException(R.string.wallet_name_is)
     }
     if (daemonModel.listWallets().contains(name)) {
-        throw ToastException(R.string.a_wallet_with_that_name_already_exists_please_enter)
+        throw ToastException(R.string.a_wallet)
     }
 }
 
@@ -163,7 +163,7 @@ class NewWalletSeedDialog : NewWalletDialog2() {
                 Kwarg("bip39_derivation", derivation))
         } catch (e: PyException) {
             if (e.message!!.startsWith("InvalidSeed")) {
-                throw ToastException(R.string.the_seed_you_entered_does_not_appear)
+                throw ToastException(R.string.the_seed)
             }
             throw e
         }
@@ -174,7 +174,7 @@ class NewWalletSeedDialog : NewWalletDialog2() {
 class NewWalletImportDialog : NewWalletDialog2() {
     override fun onBuildDialog(builder: AlertDialog.Builder) {
         super.onBuildDialog(builder)
-        builder.setNeutralButton(R.string.qr_code, null)
+        builder.setNeutralButton(R.string.QR_Code, null)
     }
 
     override fun onShowDialog() {
@@ -194,20 +194,20 @@ class NewWalletImportDialog : NewWalletDialog2() {
             } else if (libBitcoin.callAttr("is_private_key", word).toBoolean()) {
                 foundPrivkey = true
             } else {
-                throw ToastException(getString(R.string.not_a_valid, word))
+                throw ToastException(getString(R.string.not_a, word))
             }
         }
 
         if (foundAddress) {
             if (foundPrivkey) {
                 throw ToastException(
-                    R.string.cannot_specify_private_keys_and_addresses_in_the_same_wallet)
+                    R.string.cannot_specify)
             }
             daemonModel.commands.callAttr("create", name, password, Kwarg("addresses", input))
         } else if (foundPrivkey) {
             daemonModel.commands.callAttr("create", name, password, Kwarg("privkeys", input))
         } else {
-            throw ToastException(R.string.you_appear_to_have_entered_no)
+            throw ToastException(R.string.you_appear)
         }
     }
 
@@ -230,7 +230,7 @@ class NewWalletImportDialog : NewWalletDialog2() {
 class NewWalletImportMasterDialog : NewWalletDialog2() {
     override fun onBuildDialog(builder: AlertDialog.Builder) {
         super.onBuildDialog(builder)
-        builder.setNeutralButton(R.string.qr_code, null)
+        builder.setNeutralButton(R.string.QR_Code, null)
     }
 
     override fun onShowDialog() {
@@ -266,7 +266,7 @@ fun setupSeedDialog(fragment: AlertDialogFragment) {
         val seed = fragment.arguments!!.getString("seed")
         if (seed == null) {
             // Import
-            tvPrompt.setText(R.string.please_enter_your_seed_phrase)
+            tvPrompt.setText(R.string.please_enter_your_seed)
         } else {
             // Generate or display
             tvPrompt.setText(seedAdvice(seed))
@@ -279,7 +279,7 @@ fun setupSeedDialog(fragment: AlertDialogFragment) {
             // Import or generate
             passphrasePanel.visibility = View.VISIBLE
             tvPassphrasePrompt.setText(app.getString(R.string.you_may_extend) + " " +
-                                       app.getString(R.string.if_you_are))
+                                       app.getString(R.string.if_you_are_not))
         } else {
             // Display
             if (passphrase.isNotEmpty()) {
@@ -295,6 +295,6 @@ fun setupSeedDialog(fragment: AlertDialogFragment) {
 
 fun seedAdvice(seed: String): String {
     return app.getString(R.string.please_save, seed.split(" ").size) + " " +
-           app.getString(R.string.this_seed_will) + " " +
+           app.getString(R.string.this_seed) + " " +
            app.getString(R.string.never_disclose)
 }

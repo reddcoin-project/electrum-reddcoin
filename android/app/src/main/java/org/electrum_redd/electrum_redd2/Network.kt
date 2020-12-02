@@ -56,7 +56,7 @@ class NetworkActivity : AppCompatActivity(R.layout.network) {
         ifaces.sortBy { it.get("server").toString() }
         ifaceLock.callAttr("release")
 
-        var status = getString(R.string.connected_to, ifaces.size)
+        var status = getString(R.string.connected_to_node, ifaces.size)
         val isSplit = daemonModel.network.callAttr("get_blockchains").asMap().size > 1
         if (isSplit) {
             val curChain = daemonModel.network.callAttr("blockchain")

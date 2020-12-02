@@ -36,7 +36,7 @@ class SendDialog : AlertDialogFragment() {
 
     init {
         if (daemonModel.wallet!!.callAttr("is_watching_only").toBoolean()) {
-            throw ToastException(R.string.this_wallet_is)
+            throw ToastException(R.string.this_wallet_is_watching_only_)
         } else if (daemonModel.wallet!!.callAttr("get_receiving_addresses")
                    .asList().isEmpty()) {
             // At least one receiving address is needed to call wallet.dummy_address.
@@ -55,7 +55,7 @@ class SendDialog : AlertDialogFragment() {
         }
         builder.setView(R.layout.send)
             .setNegativeButton(android.R.string.cancel, null)
-            .setNeutralButton(R.string.qr_code, null)
+            .setNeutralButton(R.string.QR_Code, null)
     }
 
     override fun onShowDialog() {
@@ -263,7 +263,7 @@ class SendContactsDialog : MenuDialog() {
 
     override fun onShowDialog() {
         if (contacts.isEmpty()) {
-            toast(R.string.you_dont_have_any_contacts)
+            toast(R.string.you_dont)
             dismiss()
         }
     }

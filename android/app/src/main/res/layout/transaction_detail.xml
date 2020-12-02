@@ -143,7 +143,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier5"
                 app:layout_constraintTop_toBottomOf="@+id/tvTimestamp"
-                tools:text="@string/confirmations" />
+                tools:text="@string/_confirmation" />
 
             <TextView
                 android:id="@+id/textView16"

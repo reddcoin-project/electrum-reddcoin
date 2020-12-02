@@ -91,8 +91,8 @@ class TransactionModel(val txHistory: PyObject) {
     val status: String  by lazy {
         val confirmations = get("conf").toInt()
         when {
-            confirmations <= 0 -> app.getString(R.string.Unconfirmed)
-            else -> app.resources.getQuantityString(R.plurals.confirmation,
+            confirmations <= 0 -> app.getString(R.string.unconfirmed)
+            else -> app.resources.getQuantityString(R.plurals._1_s,
                                                     confirmations, confirmations)
         }
     }

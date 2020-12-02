@@ -79,7 +79,7 @@ class ContactDialog : AlertDialogFragment() {
             setView(R.layout.contact_detail)
             setNegativeButton(android.R.string.cancel, null)
             setPositiveButton(android.R.string.ok, null)
-            setNeutralButton(if (existingContact == null) R.string.qr_code
+            setNeutralButton(if (existingContact == null) R.string.QR_Code
                              else R.string.delete,
                              null)
         }

@@ -139,8 +139,8 @@ fun isEditable(et: EditText) = et.isFocusable()
 fun copyToClipboard(text: CharSequence, what: Int? = null) {
     @Suppress("DEPRECATION")
     (getSystemService(ClipboardManager::class)).text = text
-    val message = if (what == null) app.getString(R.string.text_copied)
-                  else app.getString(R.string._s_copied, app.getString(what))
+    val message = if (what == null) app.getString(R.string.text_copied_to_clipboard)
+                  else app.getString(R.string.copied_to, app.getString(what))
     toast(message, Toast.LENGTH_SHORT)
 }
 
