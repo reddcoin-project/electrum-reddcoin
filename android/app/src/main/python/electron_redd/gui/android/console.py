@@ -8,10 +8,10 @@ import pkgutil
 from shutil import copyfile
 import unittest
 
-from electroncash import commands, daemon, keystore, simple_config, storage, tests, util
-from electroncash.i18n import _
-from electroncash.storage import WalletStorage
-from electroncash.wallet import (ImportedAddressWallet, ImportedPrivkeyWallet, Standard_Wallet,
+from electrum_redd import commands, daemon, keystore, simple_config, storage, tests, util
+from electrum_redd.i18n import _
+from electrum_redd.storage import WalletStorage
+from electrum_redd.wallet import (Imported_Wallet, Standard_Wallet,
                                  Wallet)
 
 from android.preference import PreferenceManager
