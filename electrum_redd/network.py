@@ -70,6 +70,7 @@ if TYPE_CHECKING:
 
 _logger = get_logger(__name__)
 
+DEFAULT_AUTO_CONNECT = True
 
 NUM_TARGET_CONNECTED_SERVERS = 10
 NUM_STICKY_SERVERS = 4
