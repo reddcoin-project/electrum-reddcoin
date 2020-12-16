@@ -62,6 +62,11 @@ android {
                 srcDir REPO_ROOT
                 include "electrum_redd/**"
                 exclude "**/*.po", "**/*.pot"
+                exclude "electrum_redd/gui/icons"
+                exclude "electrum_redd/gui/kivy"
+                exclude "electrum_redd/gui/qt"
+                exclude "electrum_redd/gui/stdio.py"
+                exclude "electrum_redd/gui/text.py"
                 include "electrum_redd/gui/__init__.py"
                 include "electrum_redd/plugins/__init__.py"
 
