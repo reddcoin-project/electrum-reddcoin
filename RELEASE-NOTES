@@ -1,4 +1,7 @@
-# Release 4.0.4 - (Nov XX, 2020)
+# Release 4.0.5 - (May 07, 2020)
+ * Add new electrum server node
+
+# Release 4.0.4 - (Nov 23, 2020)
  * Android binary
    - update build tools 30.0.2
  * PSBT: fix regression in 4.0.3 where UTXO data was not included in
