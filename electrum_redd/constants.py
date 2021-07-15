@@ -109,6 +109,7 @@ class BitcoinTestnet(AbstractNet):
     DEFAULT_PORTS = {'t': '51001', 's': '51002'}
     DEFAULT_SERVERS = read_json('servers_testnet.json', {})
     CHECKPOINTS = read_json('checkpoints_testnet.json', [])
+    HEADERS_URL = "https://download.reddcoin.com/bin/electrum/headers/testnet/blockchain_headers"
 
     XPRV_HEADERS = {
         'standard':    0x04358394,  # tprv
@@ -126,7 +127,7 @@ class BitcoinTestnet(AbstractNet):
         'p2wsh':       0x02575483,  # Vpub
     }
     XPUB_HEADERS_INV = inv_dict(XPUB_HEADERS)
-    BIP44_COIN_TYPE = 1
+    BIP44_COIN_TYPE = 4
     LN_REALM_BYTE = 1
     LN_DNS_SEEDS = [  # TODO investigate this again
         #'test.nodes.lightning.directory.',  # times out.
