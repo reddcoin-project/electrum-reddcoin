@@ -12,6 +12,7 @@ packages
 env/
 .buildozer/
 bin/
+android/
 /app.fil
 .idea
 .mypy_cache
@@ -44,3 +45,4 @@ electrum_redd/*.dylib
 
 # virtualenv
 venv
+/contrib/build-wine/signed/
